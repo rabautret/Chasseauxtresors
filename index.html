@@ -322,6 +322,60 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 
 .leaflet-popup-content-wrapper{background:var(--sable) !important;border:3px solid var(--coral) !important;border-radius:12px !important;font-family:var(--f-corps) !important}
 .leaflet-popup-tip{background:var(--coral) !important}
+
+
+/* === OPTIMISATIONS MOBILE & DESIGN 2026 === */
+body{-webkit-tap-highlight-color:transparent}
+#map{filter:saturate(1.08) contrast(1.02)}
+#panneau{
+  backdrop-filter:blur(12px);
+}
+#panneau-body{
+  max-height:45vh;
+  overflow-y:auto;
+  box-shadow:0 -8px 30px rgba(0,0,0,.25);
+}
+#carte-parchemin{
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
+}
+.btn-go,.btn-tirage,#btn-trouve,#btn-valider-code{
+  min-height:56px;
+}
+.fab{
+  width:60px;
+  height:60px;
+  font-size:1.5rem;
+}
+#btn-layer{top:82px}
+#input-code,#input-code-tresor{
+  font-size:1.8rem !important;
+}
+input[inputmode="numeric"]{
+  font-variant-numeric:tabular-nums;
+}
+@media (max-width:768px){
+  #header h1{font-size:.9rem}
+  #chrono{font-size:1.1rem}
+  #panneau-body{max-height:50vh}
+  .card{max-width:95vw !important}
+}
+@media (orientation:landscape){
+  #map-wrapper{display:flex}
+  #map{width:65% !important}
+  #panneau{
+    position:relative;
+    width:35%;
+    bottom:auto;
+    right:0;
+    left:auto;
+    transform:none !important;
+  }
+  #panneau-body{
+    height:100vh;
+    max-height:none;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -439,7 +493,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
       <div id="zone-code">
         <div id="label-code">🔑 Entre le code secret :</div>
         <div id="saisie-code-wrap">
-          <input id="input-code" type="text" maxlength="4" placeholder="0000" autocomplete="off" autocorrect="off" spellcheck="false">
+          <input id="input-code" type="text" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off" autocorrect="off" spellcheck="false">
           <button id="btn-valider-code">Valider ✓</button>
         </div>
         <div id="msg-code"></div>
@@ -461,7 +515,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
     <div id="zone-code-tresor">
       <div id="label-code-tresor" style="font-family:var(--f-titre);font-size:.9rem;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:6px">🏆 Code du trésor :</div>
       <div style="display:flex;gap:8px;align-items:center">
-        <input id="input-code-tresor" type="text" maxlength="4" placeholder="0000" autocomplete="off" autocorrect="off" spellcheck="false"
+        <input id="input-code-tresor" type="text" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off" autocorrect="off" spellcheck="false"
           style="flex:1;padding:13px 16px;border-radius:var(--radius);border:3px solid var(--or);background:var(--blanc);font-family:var(--f-titre);font-size:1.4rem;letter-spacing:.25em;text-align:center;color:var(--texte);text-transform:uppercase;outline:none;caret-color:var(--or)">
         <button id="btn-valider-tresor"
           style="padding:13px 18px;background:linear-gradient(135deg,var(--or),var(--or2));color:var(--texte);border:none;border-radius:var(--radius);font-family:var(--f-titre);font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #b45309;flex-shrink:0">
