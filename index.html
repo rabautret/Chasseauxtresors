@@ -376,6 +376,84 @@ input[inputmode="numeric"]{
   }
 }
 
+
+/* === PACK DESIGN PRO === */
+body{
+  background:linear-gradient(180deg,#0f2744,#1a3a5c);
+}
+#header{
+  backdrop-filter:blur(10px);
+}
+#chrono{
+  font-size:1.2rem;
+  box-shadow:0 0 12px rgba(245,158,11,.35);
+}
+#carte-parchemin{
+  box-shadow:0 8px 24px rgba(0,0,0,.15);
+}
+.btn-go{
+  animation:pulsepro 2s infinite;
+}
+@keyframes pulsepro{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.03)}
+}
+.etape-star.active{
+  box-shadow:0 0 16px rgba(245,158,11,.8);
+}
+#panneau-body{
+  max-height:45vh;
+  overflow:auto;
+}
+.fab{
+  width:60px;
+  height:60px;
+  font-size:1.5rem;
+}
+@media (orientation:landscape){
+  #map-wrapper{
+    display:flex !important;
+  }
+  #map{
+    width:65%;
+  }
+  #panneau{
+    position:relative;
+    width:35%;
+    height:100%;
+    transform:none !important;
+  }
+  #panneau-body{
+    max-height:none;
+    height:calc(100% - 50px);
+  }
+}
+
+
+/* ===== VERSION CAMPING PRO ===== */
+.logo{filter:drop-shadow(0 0 25px rgba(251,191,36,.6));}
+#ecran-accueil h1{font-size:2.4rem!important;}
+.btn-mode{
+  border:2px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(8px);
+}
+.recap-card{
+  animation:tresor-pop .7s cubic-bezier(.34,1.56,.64,1), glowwin 2s infinite alternate;
+}
+@keyframes glowwin{
+ from{box-shadow:0 0 0 8px rgba(251,191,36,.2),0 20px 60px rgba(0,0,0,.5);}
+ to{box-shadow:0 0 25px rgba(251,191,36,.6),0 20px 60px rgba(0,0,0,.5);}
+}
+.avatar-picker{
+ display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:10px 0 15px;
+}
+.avatar{
+ width:52px;height:52px;border-radius:50%;
+ display:flex;align-items:center;justify-content:center;
+ background:rgba(255,255,255,.12);font-size:1.8rem;
+ border:2px solid rgba(255,255,255,.2);
+}
+
 </style>
 </head>
 <body>
@@ -411,7 +489,7 @@ input[inputmode="numeric"]{
     <div class="card-titre">👥 Votre équipe</div>
     <div class="card-sous">Donnez un nom à votre équipe !</div>
 
-    <input class="input-nom" id="input-nom-equipe" type="text" maxlength="20" placeholder="Ex: Les Pirates 🏴‍☠️" autocomplete="off">
+    <div class="avatar-picker"><div class="avatar">🏴‍☠️</div><div class="avatar">🦈</div><div class="avatar">🐙</div><div class="avatar">🦜</div></div><input class="input-nom" id="input-nom-equipe" type="text" maxlength="20" placeholder="Ex: Les Pirates 🏴‍☠️" autocomplete="off">
 
     <button class="btn-tirage" id="btn-tirage-equipe">
       🎲 Tirage des indices !
