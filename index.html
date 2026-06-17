@@ -286,6 +286,129 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
  letter-spacing:.08em;
 }
 
+
+.fi select,.select-fi{width:100%;padding:9px 12px;background:#1a2f4a;border:1.5px solid rgba(255,255,255,.25);border-radius:8px;color:#f0f6ff;font-family:var(--f-corps);font-size:.88rem;outline:none;cursor:pointer}
+select.fi{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f0f6ff' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+select.fi option{background:#1a2f4a;color:#f0f6ff}
+.depart-section{background:rgba(34,197,94,.08);border:1.5px solid rgba(34,197,94,.3);border-radius:10px;padding:12px;margin-bottom:10px}
+.depart-section .esec-t{color:var(--vert)}
+
+/* ══ PAYSAGE (landscape mobile) ══════════════════════════════════════════ */
+@media (orientation:landscape) and (max-height:500px){
+
+  /* ── Accueil : décor réduit, contenu horizontal ── */
+  #ecran-accueil{background:linear-gradient(180deg,#0a1628 0%,#0f2744 25%,#1a3a5c 45%,#1a7a9e 65%,#d4a860 82%,#dbc89a 100%)}
+  #lune{width:36px;height:36px;top:8px;right:10px}
+  #lune::after{width:26px;height:26px;top:4px;left:6px}
+  #mer{height:22%;bottom:20%}
+  #vagues-container{bottom:19.5%;height:40px}
+  #plage{height:22%}
+  #palmier-g,#palmier-d{display:none}
+  #bateau{width:50px;bottom:25%}
+  #coffre{width:38px;bottom:2px;right:22%}
+  #carte-deco{width:22px;bottom:8%}
+  #breton{width:44px;bottom:0;right:30%}
+
+  /* Contenu accueil en deux colonnes */
+  #accueil-content{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;padding-top:2%;gap:8px;padding:2% 12px 0}
+  #titre-pirate{font-size:1.3rem;margin-bottom:2px;width:100%;text-align:center}
+  #sous-titre-lieu{display:none}
+  #flag-row{display:none}
+  #panneau-titre{display:none}
+  #btn-equipe,#btn-ensemble{width:46%;max-width:220px;padding:10px 12px;font-size:.95rem;margin-bottom:6px}
+  #btn-equipe .icone,#btn-ensemble .icone{font-size:1.3rem}
+  #btn-equipe .txt small,#btn-ensemble .txt small{display:none}
+  #btn-admin-link{width:100%;text-align:center;margin-top:0}
+
+  /* ── Écrans (équipe, ensemble, choix aventure) ── */
+  .ecran{padding:8px 16px;justify-content:flex-start;padding-top:6px}
+  .card{padding:12px 16px;max-width:100%;border-radius:14px}
+  .card-titre{font-size:1.1rem;margin-bottom:2px}
+  .card-sous{font-size:.75rem;margin-bottom:10px}
+  .input-nom{padding:9px 14px;font-size:1.1rem;margin-bottom:10px}
+  .btn-tirage{padding:10px;font-size:.9rem;margin-bottom:8px}
+  .tirage-result{padding:8px;margin-bottom:8px}
+  .btn-go{padding:12px;font-size:1.3rem}
+  .btn-retour{margin-top:4px;padding:4px}
+
+  /* ── Choix aventure ── */
+  .aventure-item{padding:10px 12px;margin-bottom:6px}
+
+  /* ── Admin ── */
+  #admin-header h2{font-size:.9rem}
+  .admin-panel{padding:8px}
+  .av-admin-item{padding:8px 10px;margin-bottom:6px}
+  #amap-wrap{height:160px}
+  .iitem{padding:7px}
+  .esec,.tsec,.depart-section{padding:8px;margin-bottom:7px}
+
+  /* ── Jeu : header compact ── */
+  #header{padding:5px 10px}
+  #header h1{font-size:.8rem}
+  #chrono{font-size:.85rem;padding:3px 7px}
+  #gps-badge{font-size:.6rem;padding:2px 6px}
+  #btn-stop{width:26px;height:26px;font-size:.75rem}
+  #ebadge{font-size:.6rem;padding:1px 5px}
+
+  /* ── Panneau indices : version compacte ── */
+  #panneau-tab{padding:6px 12px 4px}
+  #tab-label{font-size:.85rem}
+  #panneau-body{padding:8px 10px 12px}
+  #progression{gap:3px;margin-bottom:8px}
+  .etape-star{width:26px;height:26px;font-size:.75rem}
+  #carte-parchemin{padding:8px 10px 6px;margin-bottom:8px}
+  #indice-num{font-size:.8rem;padding:2px 8px}
+  #indice-lieu{font-size:.68rem}
+  #texte-indice{font-size:.82rem;line-height:1.4}
+  #zone-code{margin-top:8px;margin-bottom:8px}
+  #label-code{font-size:.8rem;margin-bottom:6px}
+  #input-code{padding:9px 12px;font-size:1.2rem}
+  #btn-valider{padding:9px 13px;font-size:.85rem}
+  #msg-code{font-size:.75rem;min-height:18px}
+  #btn-trouve{padding:10px;font-size:.9rem}
+
+  /* Panneau trésor compact */
+  #ptresor{padding:10px 12px 14px}
+  #pth{margin-bottom:8px}
+  #ptemo{font-size:1.8rem}
+  #pttit{font-size:1rem}
+  #ptsub{font-size:.72rem}
+  #pttxt{font-size:.8rem;padding:7px 10px;margin-bottom:8px}
+  .ctinp{padding:9px 12px;font-size:1.2rem}
+  .ctbtn{padding:9px 13px;font-size:.85rem}
+
+  /* Récap compact */
+  .rc{padding:14px 14px 12px;border-radius:16px}
+  .rctrophee{font-size:2.5rem;margin-bottom:4px}
+  .rctit{font-size:1.3rem}
+  .rceq{font-size:.8rem;margin-bottom:8px}
+  .rcblock{padding:10px;margin-bottom:8px}
+  .rcval{font-size:2rem}
+  .rclbl{font-size:.7rem}
+  .rcstats{gap:6px;margin-bottom:8px}
+  .rcstat{padding:7px}
+  .rcstat .v{font-size:1.1rem}
+  .rcmsg{padding:7px;font-size:.8rem;margin-bottom:10px}
+  #btn-rejouer{padding:10px;font-size:.9rem}
+
+  /* Modal stop compact */
+  #mstop{padding:16px 14px}
+  #mstop .me{font-size:1.8rem;margin-bottom:4px}
+  #mstop h3{font-size:1.1rem}
+  #mstop p{font-size:.78rem;margin-bottom:12px}
+  #btn-stop-ok,#btn-stop-no{padding:9px}
+
+  /* Modal mdp */
+  .modal-card{padding:16px 14px}
+  .modal-card h3{font-size:1.1rem}
+  .modal-input{padding:9px 12px;font-size:1.1rem}
+
+  /* Toast */
+  #toast{top:50px;font-size:.85rem;padding:7px 14px}
+  #banner{padding:8px 12px}
+  #banner span{font-size:.8rem}
+  .brep{padding:5px 10px;font-size:.75rem}
+}
 </style>
 </head>
 <body>
@@ -416,35 +539,48 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 </div>
 <!-- ADMIN -->
 <div id="ecran-admin" class="cache">
-  <div id="admin-header"><h2>⚙️ Admin — Aventures</h2><button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button><button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button></div>
-  <div id="admin-tabs"><div class="admin-tab active" data-tab="aventures">🗺️ Aventures</div><div class="admin-tab" data-tab="editeur">✏️ Éditeur</div></div>
-  <div id="admin-content">
-    <div id="admin-panel-aventures" class="admin-panel active">
-      <div id="admin-liste-av"></div>
-      <button class="btn-av-new" id="btn-new-av">＋ Nouvelle aventure</button>
-    </div>
-    <div id="admin-panel-editeur" class="admin-panel">
-      <div id="editor-ph" style="text-align:center;padding:40px 20px;color:rgba(255,255,255,.3);font-family:var(--f-titre)">← Sélectionne une aventure à éditer</div>
-      <div id="editor-av">
+  <div id<div id="editor-av">
         <button class="editor-back" id="btn-editor-back">← Retour liste</button>
         <div class="esec"><div class="esec-t">📛 Informations</div>
-          <div class="fl">Nom</div><input class="fi" id="e-nom" type="text" placeholder="Nom de l'aventure" maxlength="50">
-          <div class="fl">Emoji</div><input class="fi" id="e-emoji"
+          <div class="fl">Nom</div>
+          <input class="fi" id="e-nom" type="text" placeholder="Nom de l'aventure" maxlength="50">
+          <div class="fl">Emoji</div>
+          <input class="fi" id="e-emoji" type="text" placeholder="🗺️" maxlength="2" style="width:60px;text-align:center;font-size:1.3rem">
           <div class="fl">Catégorie</div>
           <select class="fi" id="e-categorie">
             <option value="all">🧒⚔️ Tous publics</option>
             <option value="moussaillons">🧒 Petits Moussaillons</option>
             <option value="pirates">⚔️ Grands Pirates</option>
-          </select> type="text" placeholder="🗺️" maxlength="2" style="width:60px;text-align:center;font-size:1.3rem">
+          </select>
         </div>
         <div class="esec"><div class="esec-t">🗺️ Carte — clic ou glisse pour positionner</div>
-          <div id="amap-wrap"><div id="amap"></div><div id="amap-hint">Sélectionne un indice puis clique</div></div>
+          <div id="amap-wrap"><div id="amap"></div><div id="amap-hint">Sélectionne un élément puis clique</div></div>
+        </div>
+        <div class="depart-section"><div class="esec-t">🟢 Point de départ</div>
+          <div class="fl">Texte affiché au joueur</div>
+          <textarea class="fta" id="e-depart-txt" rows="2" placeholder="Ex: Rendez-vous à l'entrée du camping…"></textarea>
+          <div class="fl">Position</div>
+          <button class="btn-av" style="background:var(--vert);color:var(--blanc);padding:8px 14px;border-radius:8px;margin-top:4px" id="btn-pos-depart">🟢 Pointer le départ</button>
+          <div class="coords" id="e-depart-coords" style="margin-top:6px"></div>
         </div>
         <div class="esec"><div class="esec-t">📍 Indices</div>
           <div id="editor-indices"></div>
           <button class="badd" id="btn-add-ind">＋ Ajouter un indice</button>
         </div>
         <div class="tsec"><div class="esec-t">🏆 Trésor Final</div>
+          <div class="fl">Texte de localisation</div>
+          <textarea class="fta" id="e-tresor-txt" rows="3" placeholder="Décris où trouver le trésor..."></textarea>
+          <div class="fl">Code secret</div>
+          <input class="fi" id="e-tresor-code" maxlength="4" placeholder="0000" style="width:100px;text-align:center;font-family:var(--f-titre);font-size:1.1rem;letter-spacing:.2em">
+          <div class="fl">Position</div>
+          <button class="btn-av" style="background:var(--or);color:var(--texte);padding:8px 14px;border-radius:8px;margin-top:4px" id="btn-pos-tresor">📍 Pointer le trésor</button>
+          <div class="coords" id="e-tresor-coords" style="margin-top:6px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+       <div class="tsec"><div class="esec-t">🏆 Trésor Final</div>
           <div class="fl">Texte de localisation</div><textarea class="fta" id="e-tresor-txt" rows="3" placeholder="Décris où trouver le trésor..."></textarea>
           <div class="fl">Code secret</div><input class="fi" id="e-tresor-code" maxlength="4" placeholder="0000" style="width:100px;text-align:center;font-family:var(--f-titre);font-size:1.1rem;letter-spacing:.2em">
           <div class="fl">Position</div>
@@ -808,7 +944,7 @@ function renderAdminListe(){
 }
 
 document.getElementById('btn-new-av').onclick=function(){
-  var n={id:genId(),nom:'Nouvelle aventure',emoji:'🗺️',active:false,
+  var n={id:genId(),nom:'Nouvelle aventure',emoji:'🗺️',active:false,categorie:'all',depart:{lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:'Rendez-vous au point de départ !'},
     indices:[{id:Date.now(),code:'0000',lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:"Texte de l'indice 1",label:'📍 Lieu 1'}],
     tresor:{code:'0000',lat:48.6378,lng:-4.4458,texte:'Texte de localisation du trésor'}};
   aventures.push(n);renderAdminListe();editerAv(n.id);
@@ -819,10 +955,15 @@ function suppAv(id){if(!confirm('Supprimer cette aventure ?'))return;aventures=a
 /* Éditeur */
 function editerAv(id){
   aAvId=id;var av=avById(id);if(!av){aAvId=null;return;}
+  if(!av.depart)av.depart={lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:'Rendez-vous au point de départ !'};
+  if(!av.categorie)av.categorie='all';
   document.getElementById('editor-ph').style.display='none';
   document.getElementById('editor-av').classList.add('on');
   document.getElementById('e-nom').value=av.nom;
   document.getElementById('e-emoji').value=av.emoji;
+  document.getElementById('e-categorie').value=av.categorie;
+  document.getElementById('e-depart-txt').value=av.depart.texte;
+  document.getElementById('e-depart-coords').textContent='📌 '+av.depart.lat+', '+av.depart.lng;
   document.getElementById('e-tresor-txt').value=av.tresor.texte;
   document.getElementById('e-tresor-code').value=av.tresor.code;
   document.getElementById('e-tresor-coords').textContent='📌 '+av.tresor.lat+', '+av.tresor.lng;
@@ -830,8 +971,16 @@ function editerAv(id){
   if(!aMap)setTimeout(initAdminMap,100);else setTimeout(function(){aMapRefresh(av);},100);
 }
 document.getElementById('btn-editor-back').onclick=function(){saveEditorToAv();document.getElementById('editor-av').classList.remove('on');document.getElementById('editor-ph').style.display='';aAvId=null;aEditing=null;renderAdminListe();switchTab('aventures');};
-['e-nom','e-emoji','e-tresor-txt','e-tresor-code'].forEach(function(id){document.getElementById(id).addEventListener('input',saveEditorToAv);});
-function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);}
+['e-nom','e-emoji','e-categorie','e-depart-txt','e-tresor-txt','e-tresor-code'].forEach(function(id){document.getElementById(id).addEventListener('input',saveEditorToAv);});
+function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;
+  av.nom=document.getElementById('e-nom').value||av.nom;
+  av.emoji=document.getElementById('e-emoji').value||av.emoji;
+  av.categorie=document.getElementById('e-categorie').value;
+  if(!av.depart)av.depart={lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:''};
+  av.depart.texte=document.getElementById('e-depart-txt').value;
+  av.tresor.texte=document.getElementById('e-tresor-txt').value;
+  av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);
+}
 
 /* Indices éditeur */
 function renderEditorIndices(av){
@@ -859,6 +1008,7 @@ document.getElementById('btn-add-ind').onclick=function(){var av=avById(aAvId);i
 function suppIndice(id){var av=avById(aAvId);if(!av||av.indices.length<=1){toast('⚠️ Minimum 1 indice');return;}av.indices=av.indices.filter(function(x){return x.id!==id;});renderEditorIndices(av);if(aMap)aMapRefresh(av);toast('🗑️ Supprimé');}
 function activerPosIndice(id){aEditing={type:'indice',id:id};document.querySelectorAll('.bpos').forEach(function(b){b.classList.remove('on');});var btn=document.getElementById('ipos-'+id);if(btn)btn.classList.add('on');document.getElementById('amap-hint').textContent='👆 Clique ou glisse pour positionner l’indice';var av=avById(aAvId);var ind=av&&av.indices.find(function(x){return x.id===id;});if(ind&&aMap)aMap.flyTo([ind.lat,ind.lng],18,{duration:.5});if(av)aMapRefresh(av);}
 document.getElementById('btn-pos-tresor').onclick=function(){aEditing={type:'tresor'};document.querySelectorAll('.bpos').forEach(function(b){b.classList.remove('on');});this.classList.add('on');document.getElementById('amap-hint').textContent='👆 Clique pour placer le trésor';var av=avById(aAvId);if(aMap&&av)aMap.flyTo([av.tresor.lat,av.tresor.lng],18,{duration:.5});};
+document.getElementById('btn-pos-depart').onclick=function(){aEditing={type:'depart'};document.querySelectorAll('.bpos').forEach(function(b){b.classList.remove('on');});this.classList.add('on');document.getElementById('amap-hint').textContent='🟢 Clique pour placer le point de départ';var av=avById(aAvId);if(aMap&&av&&av.depart)aMap.flyTo([av.depart.lat,av.depart.lng],18,{duration:.5});};
 
 /* Carte admin */
 function initAdminMap(){
@@ -876,6 +1026,7 @@ function initAdminMap(){
     var lat=parseFloat(e.latlng.lat.toFixed(6)),lng=parseFloat(e.latlng.lng.toFixed(6));
     var av=avById(aAvId);if(!av)return;
     if(aEditing.type==='indice'){var ind=av.indices.find(function(x){return x.id===aEditing.id;});if(ind){ind.lat=lat;ind.lng=lng;document.getElementById('icrd-'+ind.id).textContent='📌 '+lat+', '+lng;}}
+    else if(aEditing.type==='depart'){if(!av.depart)av.depart={texte:''};av.depart.lat=lat;av.depart.lng=lng;document.getElementById('e-depart-coords').textContent='📌 '+lat+', '+lng;}
     else{av.tresor.lat=lat;av.tresor.lng=lng;document.getElementById('e-tresor-coords').textContent='📌 '+lat+', '+lng;}
     aMapRefresh(av);toast('📍 Mis à jour !');
   });
@@ -899,7 +1050,16 @@ function aMapRefresh(av){
   var mT=L.marker([av.tresor.lat,av.tresor.lng],{icon:icoT,draggable:true}).addTo(aMap);
   mT.bindTooltip('🏆 Trésor final');
   mT.on('dragend',function(ev){var a=avById(aAvId);if(a){a.tresor.lat=parseFloat(ev.target.getLatLng().lat.toFixed(6));a.tresor.lng=parseFloat(ev.target.getLatLng().lng.toFixed(6));document.getElementById('e-tresor-coords').textContent='📌 '+a.tresor.lat+', '+a.tresor.lng;toast('🏆 Trésor déplacé !');}});
-  aMarkers.push(mT);aMap.invalidateSize();
+  aMarkers.push(mT);
+  if(av.depart){
+    var selD=aEditing&&aEditing.type==='depart';
+    var icoD=L.divIcon({className:'',html:'<div style="width:40px;height:40px;background:'+(selD?'white':'#22c55e')+';border:3px solid '+(selD?'#22c55e':'white')+';border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem'+(selD?';box-shadow:0 0 0 4px #22c55e':'')+' ">🟢</div>',iconSize:[40,40],iconAnchor:[20,20]});
+    var mD=L.marker([av.depart.lat,av.depart.lng],{icon:icoD,draggable:true}).addTo(aMap);
+    mD.bindTooltip('🟢 Point de départ');
+    mD.on('dragend',function(ev){var a=avById(aAvId);if(a&&a.depart){a.depart.lat=parseFloat(ev.target.getLatLng().lat.toFixed(6));a.depart.lng=parseFloat(ev.target.getLatLng().lng.toFixed(6));document.getElementById('e-depart-coords').textContent='📌 '+a.depart.lat+', '+a.depart.lng;toast('🟢 Départ déplacé !');}});
+    aMarkers.push(mD);
+  }
+  aMap.invalidateSize();
 }
 
 /* ── DOMContentLoaded ── */
