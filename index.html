@@ -374,7 +374,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
   </div>
 </div>
 
-<!-- CHOIX CATEGORIE -->
+<!-- CHOIX CATEGORIE DESACTIVE -->
 <div class="ecran cache" id="ecran-categorie">
   <div style="font-family:var(--f-titre);color:var(--or2);font-size:1.4rem;margin-bottom:6px">🏴‍☠️ Choisir une catégorie</div>
   <button class="btn-mode" id="btn-cat-moussaillons"><span class="icone">🧒</span><span class="txt">Petits Moussaillons<small>4 à 8 ans</small></span></button>
@@ -993,6 +993,35 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 });
 })();
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  const cat=document.getElementById('ecran-categorie');
+  if(cat) cat.remove();
+
+  const be=document.getElementById('btn-equipe');
+  const bt=document.getElementById('btn-ensemble');
+
+  if(be){
+    be.addEventListener('click',function(){
+      setTimeout(function(){
+        const c=document.getElementById('ecran-categorie');
+        if(c) c.classList.add('cache');
+      },10);
+    },true);
+  }
+
+  if(bt){
+    bt.addEventListener('click',function(){
+      setTimeout(function(){
+        const c=document.getElementById('ecran-categorie');
+        if(c) c.classList.add('cache');
+      },10);
+    },true);
+  }
+});
 </script>
 
 </body>
