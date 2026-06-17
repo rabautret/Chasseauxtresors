@@ -731,7 +731,18 @@ function renderChoixAv(){
     c.innerHTML='<div style="text-align:center;padding:30px 20px;color:rgba(255,255,255,.5);font-family:var(--f-titre);font-size:.95rem">😕 Aucune aventure activée<br>pour cette catégorie !</div>';
     return;
   }
-  filt.forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices · '+catLabel(av.categorie||'all')+'</div></div>';d.onclick=function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');};c.appendChild(d);});}
+  filt.forEach(function(av){
+    var d=document.createElement('div');
+    d.className='aventure-item';
+    d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';
+    d.addEventListener('click',function(){
+      S.avId=av.id;
+      resetTirage();
+      majEcranEnsemble();
+      allerVers('ecran-ensemble');
+    });
+    c.appendChild(d);
+  });}
 document.getElementById('btn-retour-choix').onclick=function(){allerVers('ecran-categorie');};
 
 function choisirCategorie(cat){
