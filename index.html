@@ -607,8 +607,18 @@ function majEcranEnsemble(){
 document.getElementById('btn-tirage-ensemble').onclick=function(){faireTirage('ensemble');};
 document.getElementById('btn-retour-equipe').onclick=function(){allerVers(avFiltrees().length>1?'ecran-choix-aventure':'ecran-categorie');};
 document.getElementById('btn-retour-ensemble').onclick=function(){allerVers(avFiltrees().length>1?'ecran-choix-aventure':'ecran-categorie');};
-document.getElementById('btn-go-equipe').onclick=function(){S.nomEq=document.getElementById('input-nom-equipe').value.trim()||'Les Pirates';demarrerChasse(false);};
-document.getElementById('btn-go-ensemble').onclick=function(){if(!S.ordreIds.length&&S.avId){var av=avCourante();S.ordreIds=av.indices.map(function(x){return x.id;});}demarrerChasse(false);};
+document.getElementById('btn-go-equipe').onclick=function(){
+S.nomEq=document.getElementById('input-nom-equipe').value.trim()||'Les Pirates';
+document.getElementById('ecran-categorie').classList.add('cache');
+document.getElementById('ecran-choix-aventure').classList.add('cache');
+demarrerChasse(false);
+};
+document.getElementById('btn-go-ensemble').onclick=function(){
+if(!S.ordreIds.length&&S.avId){var av=avCourante();S.ordreIds=av.indices.map(function(x){return x.id;});}
+document.getElementById('ecran-categorie').classList.add('cache');
+document.getElementById('ecran-choix-aventure').classList.add('cache');
+demarrerChasse(false);
+};
 
 /* ── Chasse ── */
 function demarrerChasse(reprise){
