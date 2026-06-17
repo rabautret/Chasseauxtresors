@@ -428,6 +428,12 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
         <div class="esec"><div class="esec-t">📛 Informations</div>
           <div class="fl">Nom</div><input class="fi" id="e-nom" type="text" placeholder="Nom de l'aventure" maxlength="50">
           <div class="fl">Emoji</div><input class="fi" id="e-emoji" type="text" placeholder="🗺️" maxlength="2" style="width:60px;text-align:center;font-size:1.3rem">
+          <div class="fl">Catégorie</div>
+          <select class="fi" id="e-categorie">
+            <option value="all">🧒⚔️ Tous publics</option>
+            <option value="moussaillons">🧒 Petits Moussaillons</option>
+            <option value="pirates">⚔️ Grands Pirates</option>
+          </select>
         </div>
         <div class="esec"><div class="esec-t">🗺️ Carte — clic ou glisse pour positionner</div>
           <div id="amap-wrap"><div id="amap"></div><div id="amap-hint">Sélectionne un indice puis clique</div></div>
@@ -960,5 +966,45 @@ document.addEventListener('DOMContentLoaded',function(){
   }
 });
 </script>
+
+<script>
+/* V9.4 Catégories persistantes */
+document.addEventListener('DOMContentLoaded',function(){
+
+  function ensureCats(){
+    if(typeof aventures!=='undefined'){
+      aventures.forEach(a=>{ if(!a.categorie) a.categorie='all'; });
+    }
+  }
+  setTimeout(ensureCats,500);
+
+  // Sauvegarde du champ catégorie dans l'aventure en cours
+  document.addEventListener('change',function(e){
+    if(e.target && e.target.id==='e-categorie'){
+      try{
+        if(typeof aAvId!=='undefined' && typeof aventures!=='undefined'){
+          var av=aventures.find(x=>x.id===aAvId);
+          if(av) av.categorie=e.target.value;
+        }
+      }catch(err){}
+    }
+  });
+
+  // Recharge la catégorie quand on ouvre l'éditeur
+  const iv=setInterval(function(){
+    try{
+      if(typeof aAvId!=='undefined' && typeof aventures!=='undefined'){
+        var sel=document.getElementById('e-categorie');
+        var av=aventures.find(x=>x.id===aAvId);
+        if(sel && av){
+          sel.value=av.categorie||'all';
+        }
+      }
+    }catch(err){}
+  },1000);
+
+});
+</script>
+
 </body>
 </html>
