@@ -272,6 +272,18 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 #btn-newp{background:rgba(255,255,255,.2);color:var(--blanc);border:1px solid rgba(255,255,255,.4)}
 .leaflet-popup-content-wrapper{background:var(--sable) !important;border:3px solid var(--coral) !important;border-radius:12px !important;font-family:var(--f-corps) !important}
 .leaflet-popup-tip{background:var(--coral) !important}
+
+#version-app{
+ position:absolute;
+ bottom:8px;
+ right:12px;
+ font-size:.75rem;
+ font-weight:800;
+ color:rgba(255,255,255,.65);
+ z-index:20;
+ letter-spacing:.08em;
+}
+
 </style>
 </head>
 <body>
@@ -358,7 +370,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
     <div id="panneau-titre"><div class="pt-label">⚔️ À vos marques, pirates ! ⚔️</div><div class="pt-texte">Qui trouvera le trésor en premier ?</div></div>
     <button class="btn-mode" id="btn-equipe"><span class="icone">👥</span><span class="txt">Par Équipes<small>Chaque équipe a son propre chemin</small></span></button>
     <button class="btn-mode" id="btn-ensemble"><span class="icone">🤝</span><span class="txt">Tous Ensemble<small>Un seul chemin pour tout le groupe</small></span></button>
-    <button id="btn-admin-link">⚙️ ADMIN</button>
+    <button id="btn-admin-link">⚙️ ADMIN</button><div id="version-app">🏴‍☠️ V8.3</div>
   </div>
 </div>
 
@@ -981,50 +993,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 });
 })();
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  if(typeof choisirMode==='function'){
-    document.getElementById('btn-equipe').onclick=function(){
-      S.mode='equipe';
-      allerVers('ecran-categorie');
-    };
-    document.getElementById('btn-ensemble').onclick=function(){
-      S.mode='ensemble';
-      allerVers('ecran-categorie');
-    };
-
-    function ouvrirCategorie(cat){
-      window.CURRENT_CATEGORY=cat;
-      var act=avActives().filter(function(av){
-        if(!av.categories) return true;
-        return av.categories.includes(cat);
-      });
-      renderChoixAv=function(){
-        var c=document.getElementById('liste-av-joueur');
-        c.innerHTML='';
-        act.forEach(function(av){
-          var d=document.createElement('div');
-          d.className='aventure-item';
-          d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';
-          d.onclick=function(){
-            S.avId=av.id;
-            allerVers(S.mode==='equipe'?'ecran-equipe':'ecran-ensemble');
-            resetTirage();
-          };
-          c.appendChild(d);
-        });
-      };
-      renderChoixAv();
-      allerVers('ecran-choix-aventure');
-    }
-
-    document.getElementById('btn-cat-moussaillons')?.addEventListener('click',()=>ouvrirCategorie('moussaillons'));
-    document.getElementById('btn-cat-pirates')?.addEventListener('click',()=>ouvrirCategorie('pirates'));
-  }
-});
 </script>
 
 </body>
