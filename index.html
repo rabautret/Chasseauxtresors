@@ -539,9 +539,26 @@ select.fi option{background:#1a2f4a;color:#f0f6ff}
 </div>
 <!-- ADMIN -->
 <div id="ecran-admin" class="cache">
-  <div id<div id="editor-av">
+  <div id="admin-header">
+    <h2>⚙️ Admin — Aventures</h2>
+    <button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button>
+    <button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button>
+  </div>
+  <div id="admin-tabs">
+    <div class="admin-tab active" data-tab="aventures">🗺️ Aventures</div>
+    <div class="admin-tab" data-tab="editeur">✏️ Éditeur</div>
+  </div>
+  <div id="admin-content">
+    <div id="admin-panel-aventures" class="admin-panel active">
+      <div id="admin-liste-av"></div>
+      <button class="btn-av-new" id="btn-new-av">＋ Nouvelle aventure</button>
+    </div>
+    <div id="admin-panel-editeur" class="admin-panel">
+      <div id="editor-ph" style="text-align:center;padding:40px 20px;color:rgba(255,255,255,.3);font-family:var(--f-titre)">← Sélectionne une aventure à éditer</div>
+      <div id="editor-av">
         <button class="editor-back" id="btn-editor-back">← Retour liste</button>
-        <div class="esec"><div class="esec-t">📛 Informations</div>
+        <div class="esec">
+          <div class="esec-t">📛 Informations</div>
           <div class="fl">Nom</div>
           <input class="fi" id="e-nom" type="text" placeholder="Nom de l'aventure" maxlength="50">
           <div class="fl">Emoji</div>
@@ -553,21 +570,25 @@ select.fi option{background:#1a2f4a;color:#f0f6ff}
             <option value="pirates">⚔️ Grands Pirates</option>
           </select>
         </div>
-        <div class="esec"><div class="esec-t">🗺️ Carte — clic ou glisse pour positionner</div>
+        <div class="esec">
+          <div class="esec-t">🗺️ Carte — clic ou glisse pour positionner</div>
           <div id="amap-wrap"><div id="amap"></div><div id="amap-hint">Sélectionne un élément puis clique</div></div>
         </div>
-        <div class="depart-section"><div class="esec-t">🟢 Point de départ</div>
+        <div class="depart-section">
+          <div class="esec-t">🟢 Point de départ</div>
           <div class="fl">Texte affiché au joueur</div>
           <textarea class="fta" id="e-depart-txt" rows="2" placeholder="Ex: Rendez-vous à l'entrée du camping…"></textarea>
           <div class="fl">Position</div>
           <button class="btn-av" style="background:var(--vert);color:var(--blanc);padding:8px 14px;border-radius:8px;margin-top:4px" id="btn-pos-depart">🟢 Pointer le départ</button>
           <div class="coords" id="e-depart-coords" style="margin-top:6px"></div>
         </div>
-        <div class="esec"><div class="esec-t">📍 Indices</div>
+        <div class="esec">
+          <div class="esec-t">📍 Indices</div>
           <div id="editor-indices"></div>
           <button class="badd" id="btn-add-ind">＋ Ajouter un indice</button>
         </div>
-        <div class="tsec"><div class="esec-t">🏆 Trésor Final</div>
+        <div class="tsec">
+          <div class="esec-t">🏆 Trésor Final</div>
           <div class="fl">Texte de localisation</div>
           <textarea class="fta" id="e-tresor-txt" rows="3" placeholder="Décris où trouver le trésor..."></textarea>
           <div class="fl">Code secret</div>
@@ -580,17 +601,7 @@ select.fi option{background:#1a2f4a;color:#f0f6ff}
     </div>
   </div>
 </div>
-       <div class="tsec"><div class="esec-t">🏆 Trésor Final</div>
-          <div class="fl">Texte de localisation</div><textarea class="fta" id="e-tresor-txt" rows="3" placeholder="Décris où trouver le trésor..."></textarea>
-          <div class="fl">Code secret</div><input class="fi" id="e-tresor-code" maxlength="4" placeholder="0000" style="width:100px;text-align:center;font-family:var(--f-titre);font-size:1.1rem;letter-spacing:.2em">
-          <div class="fl">Position</div>
-          <button class="btn-av" style="background:var(--or);color:var(--texte);padding:8px 14px;border-radius:8px;margin-top:4px" id="btn-pos-tresor">📍 Pointer le trésor</button>
-          <div class="coords" id="e-tresor-coords" style="margin-top:6px"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 <!-- JEU -->
 <div id="header">
   <div id="hi"><div id="hl"><h1 id="h-titre">🏴‍☠️ Le Trésor du CC</h1><div id="ebadge"></div></div>
