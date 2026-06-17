@@ -505,7 +505,6 @@ select.fi option{background:#1a2f4a;color:#f0f6ff}
 <div class="ecran cache" id="ecran-categorie">
   <div style="font-family:var(--f-titre);color:var(--or2);font-size:1.8rem;margin-bottom:4px">🏴‍☠️ Catégorie</div>
   <div style="color:rgba(255,255,255,.5);font-size:.82rem;font-weight:600;margin-bottom:20px">Choisissez votre niveau !</div>
-  <button class="btn-mode" id="btn-cat-all"><span class="icone">🧭</span><span class="txt">Tous publics<small>Toutes les aventures</small></span></button>
   <button class="btn-mode" id="btn-cat-moussaillons"><span class="icone">🧒</span><span class="txt">Petits Moussaillons<small>4 à 8 ans</small></span></button>
   <button class="btn-mode" id="btn-cat-pirates"><span class="icone">⚔️</span><span class="txt">Grands Pirates<small>9 ans et +</small></span></button>
   <button class="btn-retour" id="btn-retour-cat">← Retour</button>
@@ -732,16 +731,9 @@ function choisirCategorie(cat){
   S.categorie=cat;
   var filt=avFiltrees();
   if(!filt.length){toast('⚠️ Aucune aventure pour cette catégorie !');return;}
-  if(filt.length===1){
-    S.avId=filt[0].id;
-    resetTirage();majEcranEnsemble();
-    allerVers('ecran-ensemble'); // tirage pour les deux modes
-  }else{
-    renderChoixAv();
-    allerVers('ecran-choix-aventure');
-  }
+  renderChoixAv();
+  allerVers('ecran-choix-aventure');
 }
-document.getElementById('btn-cat-all').onclick=function(){choisirCategorie('all');};
 document.getElementById('btn-cat-moussaillons').onclick=function(){choisirCategorie('moussaillons');};
 document.getElementById('btn-cat-pirates').onclick=function(){choisirCategorie('pirates');};
 document.getElementById('btn-retour-cat').onclick=function(){
