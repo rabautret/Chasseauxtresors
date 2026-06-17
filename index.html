@@ -724,7 +724,14 @@ document.getElementById('btn-equipe').onclick=function(){choisirMode('equipe');}
 document.getElementById('btn-ensemble').onclick=function(){choisirMode('ensemble');};
 
 /* ── Choix aventure ── */
-function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';avFiltrees().forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices · '+catLabel(av.categorie||'all')+'</div></div>';d.onclick=function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');};c.appendChild(d);});}
+function renderChoixAv(){
+  var c=document.getElementById('liste-av-joueur');c.innerHTML='';
+  var filt=avFiltrees();
+  if(!filt.length){
+    c.innerHTML='<div style="text-align:center;padding:30px 20px;color:rgba(255,255,255,.5);font-family:var(--f-titre);font-size:.95rem">😕 Aucune aventure activée<br>pour cette catégorie !</div>';
+    return;
+  }
+  filt.forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices · '+catLabel(av.categorie||'all')+'</div></div>';d.onclick=function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');};c.appendChild(d);});}
 document.getElementById('btn-retour-choix').onclick=function(){allerVers('ecran-categorie');};
 
 function choisirCategorie(cat){
@@ -1027,8 +1034,13 @@ function editerAv(id){
   renderEditorIndices(av);switchTab('editeur');aEditing=null;
   if(!aMap)setTimeout(initAdminMap,100);else setTimeout(function(){aMapRefresh(av);},100);
 }
-document.getElementById('btn-editor-back').onclick=function(){saveEditorToAv();document.getElementById('editor-av').classList.remove('on');document.getElementById('editor-ph').style.display='';aAvId=null;aEditing=null;renderAdminListe();switchTab('aventures');};
-['e-nom','e-emoji','e-categorie','e-depart-txt','e-tresor-txt','e-tresor-code'].forEach(function(id){document.getElementById(id).addEventListener('input',saveEditorToAv);});
+document.getElementById('btn-editor-back').onclick=function(){saveEditorToAv();sauverAv();document.getElementById('editor-av').classList.remove('on');document.getElementById('editor-ph').style.display='';aAvId=null;aEditing=null;renderAdminListe();switchTab('aventures');};
+// Champs texte : event 'input'
+['e-nom','e-emoji','e-depart-txt','e-tresor-txt','e-tresor-code'].forEach(function(id){
+  document.getElementById(id).addEventListener('input',function(){saveEditorToAv();sauverAv();});
+});
+// Select catégorie : event 'change' (obligatoire pour les <select>)
+document.getElementById('e-categorie').addEventListener('change',function(){saveEditorToAv();sauverAv();});
 function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;
   av.nom=document.getElementById('e-nom').value||av.nom;
   av.emoji=document.getElementById('e-emoji').value||av.emoji;
