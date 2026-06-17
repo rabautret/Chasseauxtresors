@@ -983,5 +983,49 @@ document.addEventListener('DOMContentLoaded',()=>{
 })();
 </script>
 
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  if(typeof choisirMode==='function'){
+    document.getElementById('btn-equipe').onclick=function(){
+      S.mode='equipe';
+      allerVers('ecran-categorie');
+    };
+    document.getElementById('btn-ensemble').onclick=function(){
+      S.mode='ensemble';
+      allerVers('ecran-categorie');
+    };
+
+    function ouvrirCategorie(cat){
+      window.CURRENT_CATEGORY=cat;
+      var act=avActives().filter(function(av){
+        if(!av.categories) return true;
+        return av.categories.includes(cat);
+      });
+      renderChoixAv=function(){
+        var c=document.getElementById('liste-av-joueur');
+        c.innerHTML='';
+        act.forEach(function(av){
+          var d=document.createElement('div');
+          d.className='aventure-item';
+          d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';
+          d.onclick=function(){
+            S.avId=av.id;
+            allerVers(S.mode==='equipe'?'ecran-equipe':'ecran-ensemble');
+            resetTirage();
+          };
+          c.appendChild(d);
+        });
+      };
+      renderChoixAv();
+      allerVers('ecran-choix-aventure');
+    }
+
+    document.getElementById('btn-cat-moussaillons')?.addEventListener('click',()=>ouvrirCategorie('moussaillons'));
+    document.getElementById('btn-cat-pirates')?.addEventListener('click',()=>ouvrirCategorie('pirates'));
+  }
+});
+</script>
+
 </body>
 </html>
