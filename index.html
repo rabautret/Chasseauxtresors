@@ -427,7 +427,13 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
         <button class="editor-back" id="btn-editor-back">← Retour liste</button>
         <div class="esec"><div class="esec-t">📛 Informations</div>
           <div class="fl">Nom</div><input class="fi" id="e-nom" type="text" placeholder="Nom de l'aventure" maxlength="50">
-          <div class="fl">Emoji</div><input class="fi" id="e-emoji" type="text" placeholder="🗺️" maxlength="2" style="width:60px;text-align:center;font-size:1.3rem">
+          <div class="fl">Emoji</div><input class="fi" id="e-emoji"
+          <div class="fl">Catégorie</div>
+          <select class="fi" id="e-categorie">
+            <option value="all">🧒⚔️ Tous publics</option>
+            <option value="moussaillons">🧒 Petits Moussaillons</option>
+            <option value="pirates">⚔️ Grands Pirates</option>
+          </select> type="text" placeholder="🗺️" maxlength="2" style="width:60px;text-align:center;font-size:1.3rem">
         </div>
         <div class="esec"><div class="esec-t">🗺️ Carte — clic ou glisse pour positionner</div>
           <div id="amap-wrap"><div id="amap"></div><div id="amap-hint">Sélectionne un indice puis clique</div></div>
@@ -1024,5 +1030,46 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 
+
+<script>
+window.CURRENT_CATEGORY=null;
+
+(function(){
+const _chargerAv=chargerAv;
+chargerAv=function(){
+ _chargerAv();
+ aventures.forEach(a=>{ if(!a.categorie) a.categorie='all'; });
+};
+
+const _choisirMode=choisirMode;
+choisirMode=function(mode){
+ S.mode=mode;
+ document.getElementById('ecran-categorie').classList.remove('cache');
+ document.getElementById('ecran-accueil').classList.add('cache');
+};
+
+document.getElementById('btn-cat-moussaillons').onclick=function(){
+ CURRENT_CATEGORY='moussaillons'; renderChoixAv(); allerVers('ecran-choix-aventure');
+};
+document.getElementById('btn-cat-pirates').onclick=function(){
+ CURRENT_CATEGORY='pirates'; renderChoixAv(); allerVers('ecran-choix-aventure');
+};
+document.getElementById('btn-retour-cat').onclick=function(){allerVers('ecran-accueil');};
+
+const _render=renderChoixAv;
+renderChoixAv=function(){
+ var c=document.getElementById('liste-av-joueur'); c.innerHTML='';
+ avActives().filter(av=>av.categorie==='all'||av.categorie===CURRENT_CATEGORY)
+ .forEach(function(av){
+   var badge=av.categorie==='moussaillons'?'🧒':(av.categorie==='pirates'?'⚔️':'🧒⚔️');
+   var d=document.createElement('div');
+   d.className='aventure-item';
+   d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+' '+badge+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';
+   d.onclick=function(){S.avId=av.id;allerVers(S.mode==='equipe'?'ecran-equipe':'ecran-ensemble');resetTirage();};
+   c.appendChild(d);
+ });
+};
+})();
+</script>
 </body>
 </html>
