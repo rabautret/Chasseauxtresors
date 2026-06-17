@@ -581,7 +581,15 @@ function choisirCategorie(cat){
 document.getElementById('btn-cat-moussaillons').onclick=function(){choisirCategorie('moussaillons');};
 document.getElementById('btn-cat-pirates').onclick=function(){choisirCategorie('pirates');};
 var _brc=document.getElementById('btn-retour-cat');
-if(_brc)_brc.onclick=function(){allerVers('ecran-accueil');};
+if(_brc)_brc.onclick=function(){
+document.getElementById('ecran-categorie').classList.add('cache');
+var ea=document.getElementById('ecran-accueil');
+if(ea) ea.classList.remove('cache');
+['ecran-choix-aventure','ecran-equipe','ecran-ensemble'].forEach(function(id){
+ var el=document.getElementById(id);
+ if(el) el.classList.add('cache');
+});
+};
 
 function majEcranEnsemble(){
   var t=document.getElementById('titre-ecran-ensemble');
