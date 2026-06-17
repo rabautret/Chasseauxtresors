@@ -570,7 +570,7 @@ document.getElementById('btn-equipe').onclick=function(){S.mode='equipe';allerVe
 document.getElementById('btn-ensemble').onclick=function(){S.mode='ensemble';allerVers('ecran-categorie');};
 
 /* ── Choix aventure ── */
-function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';var filt=avFiltrees();if(!filt.length){c.innerHTML='<div style="text-align:center;padding:30px;color:rgba(255,255,255,.5)">😕 Aucune aventure pour cette categorie</div>';return;}filt.forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';d.addEventListener('click',function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');});c.appendChild(d);});}
+function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';var filt=avFiltrees();if(!filt.length){c.innerHTML='<div style="text-align:center;padding:30px;color:rgba(255,255,255,.5)">😕 Aucune aventure pour cette categorie</div>';return;}filt.forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';d.addEventListener('click',function(){S.avId=av.id;resetTirage();majEcranEnsemble();var ec=document.getElementById('ecran-categorie');if(ec)ec.classList.add('cache');allerVers('ecran-ensemble');});c.appendChild(d);});}
 document.getElementById('btn-retour-choix').onclick=function(){allerVers('ecran-categorie');};
 
 /* ── Tirage ── */
