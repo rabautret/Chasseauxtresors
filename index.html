@@ -405,7 +405,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 <div class="ecran cache" id="ecran-ensemble">
   <div class="card">
     <div class="card-titre" id="titre-ecran-ensemble">🤝 Tous Ensemble !</div>
-    <div id="sous-ecran-ensemble" class="card-sous">On tire les indices au hasard !</div>
+    <div class="card-sous" id="sous-ecran-ensemble">On tire les indices au hasard !</div>
     <button class="btn-tirage" id="btn-tirage-ensemble">🎲 Tirage des indices !</button>
     <div class="tirage-result" id="tirage-result-ensemble"><div class="titre-tirage">🗺️ L'ordre du jour :</div><div class="tirage-etapes" id="tirage-etapes-ensemble"></div></div>
     <button class="btn-go" id="btn-go-ensemble"><span class="go-emoji">🚀</span> GO LA CHASSE !!! <span class="go-emoji">🚀</span></button>
@@ -515,12 +515,6 @@ var IMAGE_B64='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBA
 var GPS={hg:{lat:48.6415,lng:-4.4513},bd:{lat:48.6325,lng:-4.4407}};
 var HASH_MDP='e903e187c77a1915acc5affbc2ade00dfead3087c490d222aa9f7a23ad566daf';
 var CLE_AV='tresor_cc_av3',CLE_SAVE='tresor_cc_save3';
-/* ══ Config GitHub JSON ══════════════════════════════════════
-   GITHUB_RAW_URL  : URL raw de votre aventures.json sur GitHub
-     ex: 'https://raw.githubusercontent.com/rabautret/Chasseauxtresors/main/aventures.json'
-   GITHUB_TOKEN    : Personal Access Token (pour que l'admin puisse sauver)
-     Laisser '' si mise à jour manuelle du fichier json sur GitHub
-   ═══════════════════════════════════════════════════════════ */
 var GITHUB_RAW_URL='https://raw.githubusercontent.com/rabautret/Chasseauxtresors/main/aventures.json';
 var GITHUB_TOKEN='';
 var GITHUB_API_URL='https://api.github.com/repos/rabautret/Chasseauxtresors/contents/aventures.json';
@@ -547,46 +541,29 @@ function chargerAv(){
 async function chargerAvGithub(){
   if(!GITHUB_RAW_URL){chargerAv();return;}
   try{
-    /* Cache-busting pour toujours avoir la dernière version */
-    var url=GITHUB_RAW_URL+'?t='+Date.now();
-    var resp=await fetch(url,{cache:'no-store'});
-    if(resp.ok){
-      var data=await resp.json();
+    var resp=await fetch(GITHUB_RAW_URL+'?t='+Date.now(),{cache:'no-store'});
+    if(resp.ok){var data=await resp.json();
       if(Array.isArray(data)&&data.length){
-        aventures=data;
-        localStorage.setItem(CLE_AV,JSON.stringify(aventures));
-        afficherStatutGH('✅ Aventures chargées depuis GitHub');
-        return;
-      }
-    }
-  }catch(e){console.warn('GitHub fetch:',e);}
-  /* Fallback : localStorage ou défaut */
-  chargerAv();
-  afficherStatutGH('📴 Mode hors ligne (local)');
+        aventures=data;localStorage.setItem(CLE_AV,JSON.stringify(aventures));
+        afficherStatutGH('✅ Chargé depuis GitHub');return;}}
+  }catch(e){console.warn('GitHub:',e);}
+  chargerAv();afficherStatutGH('📴 Hors ligne');
 }
 function sauverAv(){
   try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}
   if(GITHUB_TOKEN&&GITHUB_API_URL){sauverAvGithub();}
-  else{afficherStatutGH('💾 Sauvegardé localement (pas de token GitHub)');}
+  else{afficherStatutGH('💾 Sauvegardé localement');}
 }
 async function sauverAvGithub(){
   try{
-    /* 1. Récupérer le SHA actuel du fichier (requis par l’API GitHub) */
-    var r1=await fetch(GITHUB_API_URL,{headers:{Authorization:'token '+GITHUB_TOKEN,'Accept':'application/vnd.github.v3+json'}});
-    var sha='';
-    if(r1.ok){var meta=await r1.json();sha=meta.sha||'';}
-    /* 2. Pousser le nouveau contenu en base64 */
+    var r1=await fetch(GITHUB_API_URL,{headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json'}});
+    var sha='';if(r1.ok){var m=await r1.json();sha=m.sha||'';}
     var content=btoa(unescape(encodeURIComponent(JSON.stringify(aventures,null,2))));
-    var body={message:'Mise à jour aventures '+new Date().toISOString(),content:content};
+    var body={message:'MAJ aventures '+new Date().toISOString(),content:content};
     if(sha)body.sha=sha;
-    var r2=await fetch(GITHUB_API_URL,{
-      method:'PUT',
-      headers:{Authorization:'token '+GITHUB_TOKEN,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
-      body:JSON.stringify(body)
-    });
-    if(r2.ok){afficherStatutGH('☁️ Sauvegardé sur GitHub !');}
-    else{var err=await r2.json();afficherStatutGH('⚠️ Erreur GitHub: '+err.message);}
-  }catch(e){afficherStatutGH('⚠️ Erreur: '+e.message);console.warn(e);}
+    var r2=await fetch(GITHUB_API_URL,{method:'PUT',headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
+    afficherStatutGH(r2.ok?'☁️ Sauvegardé sur GitHub !':'⚠️ Erreur GitHub');
+  }catch(e){afficherStatutGH('⚠️ Erreur: '+e.message);}
 }
 function afficherStatutGH(msg){
   var el=document.getElementById('gh-status');if(!el)return;
@@ -618,7 +595,7 @@ document.getElementById('btn-equipe').onclick=function(){choisirMode('equipe');}
 document.getElementById('btn-ensemble').onclick=function(){choisirMode('ensemble');};
 
 /* ── Choix aventure ── */
-function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';var filt=avFiltrees();if(!filt.length){c.innerHTML='<div style="text-align:center;padding:30px 20px;color:rgba(255,255,255,.5);font-family:var(--f-titre);font-size:.95rem">😕 Aucune aventure<br>pour cette catégorie !</div>';return;}filt.forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';d.addEventListener('click',function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');});c.appendChild(d);});}
+function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';avActives().forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';d.addEventListener('click',function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');});c.appendChild(d);});}
 document.getElementById('btn-retour-choix').onclick=function(){allerVers('ecran-accueil');};
 
 /* ── Tirage ── */
@@ -631,12 +608,8 @@ function majEcranEnsemble(){
   var t=document.getElementById('titre-ecran-ensemble');
   var s=document.getElementById('sous-ecran-ensemble');
   if(!t||!s)return;
-  if(S.mode==='equipe'){
-    t.textContent='👥 '+(S.nomEq||'Les Pirates')+' — Tirage !';
-    s.textContent='Tirez les indices pour votre équipe !';}
-  else{
-    t.textContent='🤝 Tous Ensemble — Ordre des indices :';
-    s.textContent='Les indices se jouent dans cet ordre !';}
+  if(S.mode==='equipe'){t.textContent='👥 '+(S.nomEq||'Les Pirates')+' — Tirage !';s.textContent='Tirez les indices pour votre équipe !';}
+  else{t.textContent='🤝 Tous Ensemble — Ordre :';s.textContent='Les indices se jouent dans cet ordre !';}
 }
 document.getElementById('btn-tirage-ensemble').onclick=function(){faireTirage('ensemble');};
 document.getElementById('btn-retour-equipe').onclick=function(){allerVers(avActives().length>1?'ecran-choix-aventure':'ecran-accueil');};
