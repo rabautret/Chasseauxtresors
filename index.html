@@ -144,12 +144,10 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 .esec{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;margin-bottom:10px}
 .esec-t{font-family:var(--f-titre);color:var(--or2);font-size:.9rem;margin-bottom:10px}
 .fl{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;margin-top:8px}
-.fi{width:100%;padding:9px 12px;background:#1a2f4a;border:1.5px solid rgba(255,255,255,.25);border-radius:8px;color:#f0f6ff;font-family:var(--f-corps);font-size:.88rem;outline:none}
-.fi:focus{border-color:var(--or2);background:#1e3855}
-.fi::placeholder{color:rgba(200,220,255,.4)}
-.fta{width:100%;padding:9px 12px;background:#1a2f4a;border:1.5px solid rgba(255,255,255,.25);border-radius:8px;color:#f0f6ff;font-family:var(--f-corps);font-size:.84rem;outline:none;resize:none;line-height:1.5}
-.fta:focus{border-color:var(--or2);background:#1e3855}
-.fta::placeholder{color:rgba(200,220,255,.4)}
+.fi{width:100%;padding:9px 12px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);border-radius:8px;color:var(--blanc);font-family:var(--f-corps);font-size:.88rem;outline:none}
+.fi:focus{border-color:var(--or2)}
+.fta{width:100%;padding:9px 12px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);border-radius:8px;color:var(--blanc);font-family:var(--f-corps);font-size:.84rem;outline:none;resize:none;line-height:1.5}
+.fta:focus{border-color:var(--or2)}
 .tsec{background:rgba(245,158,11,.08);border:1.5px solid rgba(245,158,11,.3);border-radius:10px;padding:12px;margin-bottom:10px}
 .iitem{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px;margin-bottom:8px}
 .ihead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
@@ -274,8 +272,6 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 #btn-newp{background:rgba(255,255,255,.2);color:var(--blanc);border:1px solid rgba(255,255,255,.4)}
 .leaflet-popup-content-wrapper{background:var(--sable) !important;border:3px solid var(--coral) !important;border-radius:12px !important;font-family:var(--f-corps) !important}
 .leaflet-popup-tip{background:var(--coral) !important}
-.av-cat-badge{font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:8px;background:rgba(139,92,246,.3);color:#c4b5fd;border:1px solid rgba(139,92,246,.4);margin-left:4px;white-space:nowrap}
-#btn-cat-all{background:linear-gradient(135deg,#0e6e8c,#0a4a85);color:var(--blanc);border:2px solid rgba(56,189,248,.3)}
 
 #version-app{
  position:absolute;
@@ -288,129 +284,6 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
  letter-spacing:.08em;
 }
 
-
-.fi select,.select-fi{width:100%;padding:9px 12px;background:#1a2f4a;border:1.5px solid rgba(255,255,255,.25);border-radius:8px;color:#f0f6ff;font-family:var(--f-corps);font-size:.88rem;outline:none;cursor:pointer}
-select.fi{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f0f6ff' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-select.fi option{background:#1a2f4a;color:#f0f6ff}
-.depart-section{background:rgba(34,197,94,.08);border:1.5px solid rgba(34,197,94,.3);border-radius:10px;padding:12px;margin-bottom:10px}
-.depart-section .esec-t{color:var(--vert)}
-
-/* ══ PAYSAGE (landscape mobile) ══════════════════════════════════════════ */
-@media (orientation:landscape) and (max-height:500px){
-
-  /* ── Accueil : décor réduit, contenu horizontal ── */
-  #ecran-accueil{background:linear-gradient(180deg,#0a1628 0%,#0f2744 25%,#1a3a5c 45%,#1a7a9e 65%,#d4a860 82%,#dbc89a 100%)}
-  #lune{width:36px;height:36px;top:8px;right:10px}
-  #lune::after{width:26px;height:26px;top:4px;left:6px}
-  #mer{height:22%;bottom:20%}
-  #vagues-container{bottom:19.5%;height:40px}
-  #plage{height:22%}
-  #palmier-g,#palmier-d{display:none}
-  #bateau{width:50px;bottom:25%}
-  #coffre{width:38px;bottom:2px;right:22%}
-  #carte-deco{width:22px;bottom:8%}
-  #breton{width:44px;bottom:0;right:30%}
-
-  /* Contenu accueil en deux colonnes */
-  #accueil-content{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;padding-top:2%;gap:8px;padding:2% 12px 0}
-  #titre-pirate{font-size:1.3rem;margin-bottom:2px;width:100%;text-align:center}
-  #sous-titre-lieu{display:none}
-  #flag-row{display:none}
-  #panneau-titre{display:none}
-  #btn-equipe,#btn-ensemble{width:46%;max-width:220px;padding:10px 12px;font-size:.95rem;margin-bottom:6px}
-  #btn-equipe .icone,#btn-ensemble .icone{font-size:1.3rem}
-  #btn-equipe .txt small,#btn-ensemble .txt small{display:none}
-  #btn-admin-link{width:100%;text-align:center;margin-top:0}
-
-  /* ── Écrans (équipe, ensemble, choix aventure) ── */
-  .ecran{padding:8px 16px;justify-content:flex-start;padding-top:6px}
-  .card{padding:12px 16px;max-width:100%;border-radius:14px}
-  .card-titre{font-size:1.1rem;margin-bottom:2px}
-  .card-sous{font-size:.75rem;margin-bottom:10px}
-  .input-nom{padding:9px 14px;font-size:1.1rem;margin-bottom:10px}
-  .btn-tirage{padding:10px;font-size:.9rem;margin-bottom:8px}
-  .tirage-result{padding:8px;margin-bottom:8px}
-  .btn-go{padding:12px;font-size:1.3rem}
-  .btn-retour{margin-top:4px;padding:4px}
-
-  /* ── Choix aventure ── */
-  .aventure-item{padding:10px 12px;margin-bottom:6px}
-
-  /* ── Admin ── */
-  #admin-header h2{font-size:.9rem}
-  .admin-panel{padding:8px}
-  .av-admin-item{padding:8px 10px;margin-bottom:6px}
-  #amap-wrap{height:160px}
-  .iitem{padding:7px}
-  .esec,.tsec,.depart-section{padding:8px;margin-bottom:7px}
-
-  /* ── Jeu : header compact ── */
-  #header{padding:5px 10px}
-  #header h1{font-size:.8rem}
-  #chrono{font-size:.85rem;padding:3px 7px}
-  #gps-badge{font-size:.6rem;padding:2px 6px}
-  #btn-stop{width:26px;height:26px;font-size:.75rem}
-  #ebadge{font-size:.6rem;padding:1px 5px}
-
-  /* ── Panneau indices : version compacte ── */
-  #panneau-tab{padding:6px 12px 4px}
-  #tab-label{font-size:.85rem}
-  #panneau-body{padding:8px 10px 12px}
-  #progression{gap:3px;margin-bottom:8px}
-  .etape-star{width:26px;height:26px;font-size:.75rem}
-  #carte-parchemin{padding:8px 10px 6px;margin-bottom:8px}
-  #indice-num{font-size:.8rem;padding:2px 8px}
-  #indice-lieu{font-size:.68rem}
-  #texte-indice{font-size:.82rem;line-height:1.4}
-  #zone-code{margin-top:8px;margin-bottom:8px}
-  #label-code{font-size:.8rem;margin-bottom:6px}
-  #input-code{padding:9px 12px;font-size:1.2rem}
-  #btn-valider{padding:9px 13px;font-size:.85rem}
-  #msg-code{font-size:.75rem;min-height:18px}
-  #btn-trouve{padding:10px;font-size:.9rem}
-
-  /* Panneau trésor compact */
-  #ptresor{padding:10px 12px 14px}
-  #pth{margin-bottom:8px}
-  #ptemo{font-size:1.8rem}
-  #pttit{font-size:1rem}
-  #ptsub{font-size:.72rem}
-  #pttxt{font-size:.8rem;padding:7px 10px;margin-bottom:8px}
-  .ctinp{padding:9px 12px;font-size:1.2rem}
-  .ctbtn{padding:9px 13px;font-size:.85rem}
-
-  /* Récap compact */
-  .rc{padding:14px 14px 12px;border-radius:16px}
-  .rctrophee{font-size:2.5rem;margin-bottom:4px}
-  .rctit{font-size:1.3rem}
-  .rceq{font-size:.8rem;margin-bottom:8px}
-  .rcblock{padding:10px;margin-bottom:8px}
-  .rcval{font-size:2rem}
-  .rclbl{font-size:.7rem}
-  .rcstats{gap:6px;margin-bottom:8px}
-  .rcstat{padding:7px}
-  .rcstat .v{font-size:1.1rem}
-  .rcmsg{padding:7px;font-size:.8rem;margin-bottom:10px}
-  #btn-rejouer{padding:10px;font-size:.9rem}
-
-  /* Modal stop compact */
-  #mstop{padding:16px 14px}
-  #mstop .me{font-size:1.8rem;margin-bottom:4px}
-  #mstop h3{font-size:1.1rem}
-  #mstop p{font-size:.78rem;margin-bottom:12px}
-  #btn-stop-ok,#btn-stop-no{padding:9px}
-
-  /* Modal mdp */
-  .modal-card{padding:16px 14px}
-  .modal-card h3{font-size:1.1rem}
-  .modal-input{padding:9px 12px;font-size:1.1rem}
-
-  /* Toast */
-  #toast{top:50px;font-size:.85rem;padding:7px 14px}
-  #banner{padding:8px 12px}
-  #banner span{font-size:.8rem}
-  .brep{padding:5px 10px;font-size:.75rem}
-}
 </style>
 </head>
 <body>
@@ -503,8 +376,7 @@ select.fi option{background:#1a2f4a;color:#f0f6ff}
 
 <!-- CHOIX CATEGORIE DESACTIVE -->
 <div class="ecran cache" id="ecran-categorie">
-  <div style="font-family:var(--f-titre);color:var(--or2);font-size:1.8rem;margin-bottom:4px">🏴‍☠️ Catégorie</div>
-  <div style="color:rgba(255,255,255,.5);font-size:.82rem;font-weight:600;margin-bottom:20px">Choisissez votre niveau !</div>
+  <div style="font-family:var(--f-titre);color:var(--or2);font-size:1.4rem;margin-bottom:6px">🏴‍☠️ Choisir une catégorie</div>
   <button class="btn-mode" id="btn-cat-moussaillons"><span class="icone">🧒</span><span class="txt">Petits Moussaillons<small>4 à 8 ans</small></span></button>
   <button class="btn-mode" id="btn-cat-pirates"><span class="icone">⚔️</span><span class="txt">Grands Pirates<small>9 ans et +</small></span></button>
   <button class="btn-retour" id="btn-retour-cat">← Retour</button>
@@ -523,32 +395,27 @@ select.fi option{background:#1a2f4a;color:#f0f6ff}
     <div class="card-titre">👥 Votre équipe</div>
     <div class="card-sous">Donnez un nom à votre équipe !</div>
     <input class="input-nom" id="input-nom-equipe" type="text" maxlength="20" placeholder="Ex: Les Pirates 🏴‍☠️" autocomplete="off">
-    <button class="btn-tirage" id="btn-suivant-equipe">Continuer →</button>
+    <button class="btn-tirage" id="btn-tirage-equipe">🎲 Tirage des indices !</button>
+    <div class="tirage-result" id="tirage-result-equipe"><div class="titre-tirage">🗺️ Votre chemin :</div><div class="tirage-etapes" id="tirage-etapes-equipe"></div></div>
+    <button class="btn-go" id="btn-go-equipe"><span class="go-emoji">🚀</span> GO LA CHASSE !!! <span class="go-emoji">🚀</span></button>
     <button class="btn-retour" id="btn-retour-equipe">← Retour</button>
   </div>
 </div>
 <!-- ENSEMBLE -->
 <div class="ecran cache" id="ecran-ensemble">
   <div class="card">
-    <div class="card-titre" id="titre-ecran-ensemble">🎲 Tirage !</div>
-    <div class="card-sous" id="sous-ecran-ensemble">On tire les indices au hasard !</div>
+    <div class="card-titre" id="titre-ecran-ensemble">🤝 Tous Ensemble !</div>
+    <div id="sous-ecran-ensemble" class="card-sous">On tire les indices au hasard !</div>
     <button class="btn-tirage" id="btn-tirage-ensemble">🎲 Tirage des indices !</button>
-    <div class="tirage-result" id="tirage-result-ensemble"><div class="titre-tirage">🗺️ Votre chemin :</div><div class="tirage-etapes" id="tirage-etapes-ensemble"></div></div>
+    <div class="tirage-result" id="tirage-result-ensemble"><div class="titre-tirage">🗺️ L'ordre du jour :</div><div class="tirage-etapes" id="tirage-etapes-ensemble"></div></div>
     <button class="btn-go" id="btn-go-ensemble"><span class="go-emoji">🚀</span> GO LA CHASSE !!! <span class="go-emoji">🚀</span></button>
     <button class="btn-retour" id="btn-retour-ensemble">← Retour</button>
   </div>
 </div>
 <!-- ADMIN -->
 <div id="ecran-admin" class="cache">
-  <div id="admin-header">
-    <h2>⚙️ Admin — Aventures</h2>
-    <button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button>
-    <button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button>
-  </div>
-  <div id="admin-tabs">
-    <div class="admin-tab active" data-tab="aventures">🗺️ Aventures</div>
-    <div class="admin-tab" data-tab="editeur">✏️ Éditeur</div>
-  </div>
+  <div id="admin-header"><h2>⚙️ Admin — Aventures</h2><div id="gh-status" style="font-size:.72rem;color:#86efac;margin-left:8px;max-width:260px;transition:opacity .5s;opacity:0"></div><button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button><button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button></div>
+  <div id="admin-tabs"><div class="admin-tab active" data-tab="aventures">🗺️ Aventures</div><div class="admin-tab" data-tab="editeur">✏️ Éditeur</div></div>
   <div id="admin-content">
     <div id="admin-panel-aventures" class="admin-panel active">
       <div id="admin-liste-av"></div>
@@ -558,42 +425,20 @@ select.fi option{background:#1a2f4a;color:#f0f6ff}
       <div id="editor-ph" style="text-align:center;padding:40px 20px;color:rgba(255,255,255,.3);font-family:var(--f-titre)">← Sélectionne une aventure à éditer</div>
       <div id="editor-av">
         <button class="editor-back" id="btn-editor-back">← Retour liste</button>
-        <div class="esec">
-          <div class="esec-t">📛 Informations</div>
-          <div class="fl">Nom</div>
-          <input class="fi" id="e-nom" type="text" placeholder="Nom de l'aventure" maxlength="50">
-          <div class="fl">Emoji</div>
-          <input class="fi" id="e-emoji" type="text" placeholder="🗺️" maxlength="2" style="width:60px;text-align:center;font-size:1.3rem">
-          <div class="fl">Catégorie</div>
-          <select class="fi" id="e-categorie">
-            <option value="all">🧒⚔️ Tous publics</option>
-            <option value="moussaillons">🧒 Petits Moussaillons</option>
-            <option value="pirates">⚔️ Grands Pirates</option>
-          </select>
+        <div class="esec"><div class="esec-t">📛 Informations</div>
+          <div class="fl">Nom</div><input class="fi" id="e-nom" type="text" placeholder="Nom de l'aventure" maxlength="50">
+          <div class="fl">Emoji</div><input class="fi" id="e-emoji" type="text" placeholder="🗺️" maxlength="2" style="width:60px;text-align:center;font-size:1.3rem">
         </div>
-        <div class="esec">
-          <div class="esec-t">🗺️ Carte — clic ou glisse pour positionner</div>
-          <div id="amap-wrap"><div id="amap"></div><div id="amap-hint">Sélectionne un élément puis clique</div></div>
+        <div class="esec"><div class="esec-t">🗺️ Carte — clic ou glisse pour positionner</div>
+          <div id="amap-wrap"><div id="amap"></div><div id="amap-hint">Sélectionne un indice puis clique</div></div>
         </div>
-        <div class="depart-section">
-          <div class="esec-t">🟢 Point de départ</div>
-          <div class="fl">Texte affiché au joueur</div>
-          <textarea class="fta" id="e-depart-txt" rows="2" placeholder="Ex: Rendez-vous à l'entrée du camping…"></textarea>
-          <div class="fl">Position</div>
-          <button class="btn-av" style="background:var(--vert);color:var(--blanc);padding:8px 14px;border-radius:8px;margin-top:4px" id="btn-pos-depart">🟢 Pointer le départ</button>
-          <div class="coords" id="e-depart-coords" style="margin-top:6px"></div>
-        </div>
-        <div class="esec">
-          <div class="esec-t">📍 Indices</div>
+        <div class="esec"><div class="esec-t">📍 Indices</div>
           <div id="editor-indices"></div>
           <button class="badd" id="btn-add-ind">＋ Ajouter un indice</button>
         </div>
-        <div class="tsec">
-          <div class="esec-t">🏆 Trésor Final</div>
-          <div class="fl">Texte de localisation</div>
-          <textarea class="fta" id="e-tresor-txt" rows="3" placeholder="Décris où trouver le trésor..."></textarea>
-          <div class="fl">Code secret</div>
-          <input class="fi" id="e-tresor-code" maxlength="4" placeholder="0000" style="width:100px;text-align:center;font-family:var(--f-titre);font-size:1.1rem;letter-spacing:.2em">
+        <div class="tsec"><div class="esec-t">🏆 Trésor Final</div>
+          <div class="fl">Texte de localisation</div><textarea class="fta" id="e-tresor-txt" rows="3" placeholder="Décris où trouver le trésor..."></textarea>
+          <div class="fl">Code secret</div><input class="fi" id="e-tresor-code" maxlength="4" placeholder="0000" style="width:100px;text-align:center;font-family:var(--f-titre);font-size:1.1rem;letter-spacing:.2em">
           <div class="fl">Position</div>
           <button class="btn-av" style="background:var(--or);color:var(--texte);padding:8px 14px;border-radius:8px;margin-top:4px" id="btn-pos-tresor">📍 Pointer le trésor</button>
           <div class="coords" id="e-tresor-coords" style="margin-top:6px"></div>
@@ -602,7 +447,6 @@ select.fi option{background:#1a2f4a;color:#f0f6ff}
     </div>
   </div>
 </div>
-
 <!-- JEU -->
 <div id="header">
   <div id="hi"><div id="hl"><h1 id="h-titre">🏴‍☠️ Le Trésor du CC</h1><div id="ebadge"></div></div>
@@ -671,9 +515,16 @@ var IMAGE_B64='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBA
 var GPS={hg:{lat:48.6415,lng:-4.4513},bd:{lat:48.6325,lng:-4.4407}};
 var HASH_MDP='e903e187c77a1915acc5affbc2ade00dfead3087c490d222aa9f7a23ad566daf';
 var CLE_AV='tresor_cc_av3',CLE_SAVE='tresor_cc_save3';
+/* ══ Config GitHub JSON ══════════════════════════════════════
+   GITHUB_RAW_URL  : URL raw de votre aventures.json sur GitHub
+     ex: 'https://raw.githubusercontent.com/rabautret/Chasseauxtresors/main/aventures.json'
+   GITHUB_TOKEN    : Personal Access Token (pour que l'admin puisse sauver)
+     Laisser '' si mise à jour manuelle du fichier json sur GitHub
+   ═══════════════════════════════════════════════════════════ */
+var GITHUB_RAW_URL='https://raw.githubusercontent.com/rabautret/Chasseauxtresors/main/aventures.json';
+var GITHUB_TOKEN='';
+var GITHUB_API_URL='https://api.github.com/repos/rabautret/Chasseauxtresors/contents/aventures.json';
 var CLR=['#f97316','#8b5cf6','#22c55e','#ef4444','#0ea5e9','#f59e0b','#ec4899','#14b8a6'];
-function catLabel(c){return c==='moussaillons'?'🧒 Moussaillons':c==='pirates'?'⚔️ Pirates':'🧭 Tous publics';}
-function avFiltrees(){return avActives().filter(function(av){if(!S.categorie||S.categorie==='all')return true;var c=av.categorie||'all';return c==='all'||c===S.categorie;});}
 
 var AV0={id:'default',nom:'La Grande Chasse du CC',emoji:'🏴‍☠️',active:true,
   indices:[
@@ -689,14 +540,66 @@ var AV0={id:'default',nom:'La Grande Chasse du CC',emoji:'🏴‍☠️',active:
 
 /* ── Aventures ── */
 var aventures=[];
-function chargerAv(){try{var r=localStorage.getItem(CLE_AV);if(r)aventures=JSON.parse(r);}catch(e){}if(!aventures.length)aventures=[JSON.parse(JSON.stringify(AV0))];}
-function sauverAv(){try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}}
+function chargerAv(){
+  try{var r=localStorage.getItem(CLE_AV);if(r)aventures=JSON.parse(r);}catch(e){}
+  if(!aventures.length)aventures=[JSON.parse(JSON.stringify(AV0))];
+}
+async function chargerAvGithub(){
+  if(!GITHUB_RAW_URL){chargerAv();return;}
+  try{
+    /* Cache-busting pour toujours avoir la dernière version */
+    var url=GITHUB_RAW_URL+'?t='+Date.now();
+    var resp=await fetch(url,{cache:'no-store'});
+    if(resp.ok){
+      var data=await resp.json();
+      if(Array.isArray(data)&&data.length){
+        aventures=data;
+        localStorage.setItem(CLE_AV,JSON.stringify(aventures));
+        afficherStatutGH('✅ Aventures chargées depuis GitHub');
+        return;
+      }
+    }
+  }catch(e){console.warn('GitHub fetch:',e);}
+  /* Fallback : localStorage ou défaut */
+  chargerAv();
+  afficherStatutGH('📴 Mode hors ligne (local)');
+}
+function sauverAv(){
+  try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}
+  if(GITHUB_TOKEN&&GITHUB_API_URL){sauverAvGithub();}
+  else{afficherStatutGH('💾 Sauvegardé localement (pas de token GitHub)');}
+}
+async function sauverAvGithub(){
+  try{
+    /* 1. Récupérer le SHA actuel du fichier (requis par l’API GitHub) */
+    var r1=await fetch(GITHUB_API_URL,{headers:{Authorization:'token '+GITHUB_TOKEN,'Accept':'application/vnd.github.v3+json'}});
+    var sha='';
+    if(r1.ok){var meta=await r1.json();sha=meta.sha||'';}
+    /* 2. Pousser le nouveau contenu en base64 */
+    var content=btoa(unescape(encodeURIComponent(JSON.stringify(aventures,null,2))));
+    var body={message:'Mise à jour aventures '+new Date().toISOString(),content:content};
+    if(sha)body.sha=sha;
+    var r2=await fetch(GITHUB_API_URL,{
+      method:'PUT',
+      headers:{Authorization:'token '+GITHUB_TOKEN,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    if(r2.ok){afficherStatutGH('☁️ Sauvegardé sur GitHub !');}
+    else{var err=await r2.json();afficherStatutGH('⚠️ Erreur GitHub: '+err.message);}
+  }catch(e){afficherStatutGH('⚠️ Erreur: '+e.message);console.warn(e);}
+}
+function afficherStatutGH(msg){
+  var el=document.getElementById('gh-status');if(!el)return;
+  el.textContent=msg;el.style.opacity='1';
+  clearTimeout(el._t);el._t=setTimeout(function(){el.style.opacity='0';},4000);
+}
 function avActives(){return aventures.filter(function(a){return a.active;});}
+function avFiltrees(){return avActives().filter(function(av){var c=av.categorie||'all';return c===(S.categorie||'all');});}
 function genId(){return 'av_'+Date.now()+'_'+Math.floor(Math.random()*9999);}
 function avById(id){return aventures.find(function(a){return a.id===id;})||aventures[0];}
 
 /* ── Partie ── */
-var S={mode:null,nomEq:'',avId:null,categorie:'all',ordreIds:[],etape:0,codeOk:false,tentatives:0,panneauOuvert:true,chrono:0,enChasse:false,tresorPhase:false,modeImg:true};
+var S={mode:null,nomEq:'',avId:null,ordreIds:[],etape:0,codeOk:false,tentatives:0,panneauOuvert:true,chrono:0,enChasse:false,tresorPhase:false,modeImg:true};
 var chronoT=null,mGPS=null,cercleGPS=null,mIndices=[],theMap=null,layerImg=null,gpsInit=false;
 function avCourante(){return avById(S.avId);}
 function indicesJeu(){var av=avCourante();return S.ordreIds.map(function(id){return av.indices.find(function(x){return x.id===id;});}).filter(Boolean);}
@@ -705,59 +608,24 @@ function chargerPartie(){try{var r=localStorage.getItem(CLE_SAVE);return r?JSON.
 function effacerPartie(){try{localStorage.removeItem(CLE_SAVE);}catch(e){}}
 
 /* ── Navigation ── */
-var ECRANS=['ecran-accueil','ecran-categorie','ecran-choix-aventure','ecran-equipe','ecran-ensemble','ecran-recap'];
+var ECRANS=['ecran-accueil','ecran-choix-aventure','ecran-equipe','ecran-ensemble','ecran-recap'];
 function allerVers(id){ECRANS.forEach(function(e){document.getElementById(e).classList.add('cache');});document.getElementById('header').classList.remove('on');document.getElementById('map-wrapper').classList.remove('on');if(id)document.getElementById(id).classList.remove('cache');}
 function afficherJeu(){allerVers(null);document.getElementById('header').classList.add('on');document.getElementById('map-wrapper').classList.add('on');}
 
 /* ── Accueil ── */
-function choisirMode(mode){
-  S.mode=mode;
-  if(!avActives().length){toast('⚠️ Aucune aventure activée !');return;}
-  if(mode==='equipe'){
-    allerVers('ecran-equipe');
-  }else{
-    // Tous ensemble -> catégorie directement
-    allerVers('ecran-categorie');
-  }
-}
+function choisirMode(mode){S.mode=mode;var act=avActives();if(!act.length){toast('⚠️ Aucune aventure activée !');return;}if(act.length===1){S.avId=act[0].id;allerVers(mode==='equipe'?'ecran-equipe':'ecran-ensemble');}else{renderChoixAv();allerVers('ecran-choix-aventure');}}
 document.getElementById('btn-equipe').onclick=function(){choisirMode('equipe');};
 document.getElementById('btn-ensemble').onclick=function(){choisirMode('ensemble');};
 
 /* ── Choix aventure ── */
-function renderChoixAv(){
-  var c=document.getElementById('liste-av-joueur');c.innerHTML='';
-  var filt=avFiltrees();
-  if(!filt.length){
-    c.innerHTML='<div style="text-align:center;padding:30px 20px;color:rgba(255,255,255,.5);font-family:var(--f-titre);font-size:.95rem">😕 Aucune aventure activée<br>pour cette catégorie !</div>';
-    return;
-  }
-  filt.forEach(function(av){
-    var d=document.createElement('div');
-    d.className='aventure-item';
-    d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';
-    d.addEventListener('click',function(){
-      S.avId=av.id;
-      resetTirage();
-      majEcranEnsemble();
-      allerVers('ecran-ensemble');
-    });
-    c.appendChild(d);
-  });}
-document.getElementById('btn-retour-choix').onclick=function(){allerVers('ecran-categorie');};
+function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';var filt=avFiltrees();if(!filt.length){c.innerHTML='<div style="text-align:center;padding:30px 20px;color:rgba(255,255,255,.5);font-family:var(--f-titre);font-size:.95rem">😕 Aucune aventure<br>pour cette catégorie !</div>';return;}filt.forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';d.addEventListener('click',function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');});c.appendChild(d);});}
+document.getElementById('btn-retour-choix').onclick=function(){allerVers('ecran-accueil');};
 
-function choisirCategorie(cat){
-  S.categorie=cat;
-  var filt=avFiltrees();
-  if(!filt.length){toast('⚠️ Aucune aventure pour cette catégorie !');return;}
-  renderChoixAv();
-  allerVers('ecran-choix-aventure');
-}
-document.getElementById('btn-cat-moussaillons').onclick=function(){choisirCategorie('moussaillons');};
-document.getElementById('btn-cat-pirates').onclick=function(){choisirCategorie('pirates');};
-document.getElementById('btn-retour-cat').onclick=function(){
-  // Retour : si mode équipe -> retour écran équipe, sinon accueil
-  allerVers(S.mode==='equipe'?'ecran-equipe':'ecran-accueil');
-};
+/* ── Tirage ── */
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function resetTirage(){['ensemble'].forEach(function(s){document.getElementById('tirage-result-'+s).classList.remove('visible');document.getElementById('btn-go-'+s).classList.remove('visible');});}
+function faireTirage(sfx){if(!S.avId){toast('⚠️ Choisis une aventure !');return;}var av=avCourante();var baseIds=av.indices.map(function(x){return x.id;});var ids=sfx==='equipe'?shuffle(baseIds):baseIds.slice();S.ordreIds=ids;var c=document.getElementById('tirage-etapes-'+sfx);c.innerHTML='';ids.forEach(function(id,i){var ind=av.indices.find(function(x){return x.id===id;});if(!ind)return;var b=document.createElement('div');b.className='tirage-badge';b.innerHTML='<span>'+(i+1)+'.</span><span>'+ind.label+'</span>';c.appendChild(b);});document.getElementById('tirage-result-'+sfx).classList.add('visible');document.getElementById('btn-go-'+sfx).classList.add('visible');toast('🎲 Tirage !');}
+document.getElementById('btn-tirage-equipe').onclick=function(){faireTirage('equipe');};
 
 function majEcranEnsemble(){
   var t=document.getElementById('titre-ecran-ensemble');
@@ -765,28 +633,16 @@ function majEcranEnsemble(){
   if(!t||!s)return;
   if(S.mode==='equipe'){
     t.textContent='👥 '+(S.nomEq||'Les Pirates')+' — Tirage !';
-    s.textContent='Tirez les indices pour votre équipe !';
-  }else{
-    t.textContent='🤝 Tous Ensemble — Tirage !';
-    s.textContent='Un seul chemin pour tout le groupe !';
-  }
+    s.textContent='Tirez les indices pour votre équipe !';}
+  else{
+    t.textContent='🤝 Tous Ensemble — Ordre des indices :';
+    s.textContent='Les indices se jouent dans cet ordre !';}
 }
-
-/* ── Tirage ── */
-function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
-function resetTirage(){['equipe','ensemble'].forEach(function(s){document.getElementById('tirage-result-'+s).classList.remove('visible');document.getElementById('btn-go-'+s).classList.remove('visible');});}
-function faireTirage(sfx){if(!S.avId){toast('⚠️ Choisis une aventure !');return;}var av=avCourante();var ids=shuffle(av.indices.map(function(x){return x.id;}));S.ordreIds=ids;var c=document.getElementById('tirage-etapes-'+sfx);c.innerHTML='';ids.forEach(function(id,i){var ind=av.indices.find(function(x){return x.id===id;});if(!ind)return;var b=document.createElement('div');b.className='tirage-badge';b.innerHTML='<span>'+(i+1)+'.</span><span>'+ind.label+'</span>';c.appendChild(b);});document.getElementById('tirage-result-'+sfx).classList.add('visible');document.getElementById('btn-go-'+sfx).classList.add('visible');toast('🎲 Tirage !');}
-// Équipe : continuer vers catégorie après avoir saisi le nom
-document.getElementById('btn-suivant-equipe').onclick=function(){
-  S.nomEq=document.getElementById('input-nom-equipe').value.trim()||'Les Pirates';
-  allerVers('ecran-categorie');
-};
-document.getElementById('btn-retour-equipe').onclick=function(){allerVers('ecran-accueil');};
-
-// Ensemble : tirage + go (utilisé pour les deux modes après catégorie+aventure)
 document.getElementById('btn-tirage-ensemble').onclick=function(){faireTirage('ensemble');};
-document.getElementById('btn-retour-ensemble').onclick=function(){allerVers(avFiltrees().length>1?'ecran-choix-aventure':'ecran-categorie');};
-document.getElementById('btn-go-ensemble').onclick=function(){demarrerChasse(false);};
+document.getElementById('btn-retour-equipe').onclick=function(){allerVers(avActives().length>1?'ecran-choix-aventure':'ecran-accueil');};
+document.getElementById('btn-retour-ensemble').onclick=function(){allerVers(avActives().length>1?'ecran-choix-aventure':'ecran-accueil');};
+document.getElementById('btn-go-equipe').onclick=function(){S.nomEq=document.getElementById('input-nom-equipe').value.trim()||'Les Pirates';demarrerChasse(false);};
+document.getElementById('btn-go-ensemble').onclick=function(){if(!S.ordreIds.length&&S.avId){var av=avCourante();S.ordreIds=av.indices.map(function(x){return x.id;});}demarrerChasse(false);};
 
 /* ── Chasse ── */
 function demarrerChasse(reprise){
@@ -825,10 +681,8 @@ function initCarte(){
 function creerMarker(ind,etat){
   var idx=indicesJeu().indexOf(ind);
   var bg=etat==='active'?CLR[idx%CLR.length]:etat==='done'?'#22c55e':'#94a3b8';
-  var num=idx+1;
-  // Couleur texte : blanc sur fonds sombres, noir sur gris clair
-  var txtCol=(bg==='#94a3b8')?'#1e293b':'white';
-  var ico=L.divIcon({className:'',html:'<div style="width:42px;height:42px;background:'+bg+';border:3px solid white;border-radius:50%;box-shadow:0 3px 10px rgba(0,0,0,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:1"><span style="font-size:.65rem;font-weight:900;color:'+txtCol+';letter-spacing:0;margin-bottom:-1px">N°'+num+'</span><span style="font-size:.75rem;line-height:1">'+( ind.label?ind.label.split(' ')[0]:'📍')+'</span></div>',iconSize:[42,42],iconAnchor:[21,21],popupAnchor:[0,-24]});
+  var em=ind.label?ind.label.split(' ')[0]:'📍';
+  var ico=L.divIcon({className:'',html:'<div style="width:38px;height:38px;background:'+bg+';border:3px solid white;border-radius:50%;box-shadow:0 3px 10px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:1.1rem">'+em+'</div>',iconSize:[38,38],iconAnchor:[19,19],popupAnchor:[0,-22]});
   var m=L.marker([ind.lat,ind.lng],{icon:ico,opacity:etat==='locked'?0:1}).addTo(theMap);
   m.bindPopup('<b>'+(idx+1)+'. '+ind.label+'</b>');
   return m;
@@ -999,7 +853,7 @@ function renderAdminListe(){
   var c=document.getElementById('admin-liste-av');c.innerHTML='';
   aventures.forEach(function(av){
     var d=document.createElement('div');d.className='av-admin-item';
-    d.innerHTML='<div class="av-admin-header"><span style="font-size:1.5rem">'+av.emoji+'</span><span class="av-admin-nom">'+av.nom+'</span><span class="av-admin-badge '+(av.active?'on':'off')+'">'+(av.active?'✅ Actif':'⏸ Inactif')+'</span><span class="av-cat-badge">'+catLabel(av.categorie)+'</span></div>'+
+    d.innerHTML='<div class="av-admin-header"><span style="font-size:1.5rem">'+av.emoji+'</span><span class="av-admin-nom">'+av.nom+'</span><span class="av-admin-badge '+(av.active?'on':'off')+'">'+(av.active?'✅ Actif':'⏸ Inactif')+'</span></div>'+
       '<div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-bottom:6px">'+av.indices.length+' indices</div>'+
       '<div class="av-admin-actions">'+
         '<button class="btn-av btn-av-edit" data-avid="'+av.id+'">✏️ Éditer</button>'+
@@ -1019,7 +873,7 @@ function renderAdminListe(){
 }
 
 document.getElementById('btn-new-av').onclick=function(){
-  var n={id:genId(),nom:'Nouvelle aventure',emoji:'🗺️',active:false,categorie:'all',depart:{lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:'Rendez-vous au point de départ !'},
+  var n={id:genId(),nom:'Nouvelle aventure',emoji:'🗺️',active:false,
     indices:[{id:Date.now(),code:'0000',lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:"Texte de l'indice 1",label:'📍 Lieu 1'}],
     tresor:{code:'0000',lat:48.6378,lng:-4.4458,texte:'Texte de localisation du trésor'}};
   aventures.push(n);renderAdminListe();editerAv(n.id);
@@ -1030,37 +884,19 @@ function suppAv(id){if(!confirm('Supprimer cette aventure ?'))return;aventures=a
 /* Éditeur */
 function editerAv(id){
   aAvId=id;var av=avById(id);if(!av){aAvId=null;return;}
-  if(!av.depart)av.depart={lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:'Rendez-vous au point de départ !'};
-  if(!av.categorie)av.categorie='all';
   document.getElementById('editor-ph').style.display='none';
   document.getElementById('editor-av').classList.add('on');
   document.getElementById('e-nom').value=av.nom;
   document.getElementById('e-emoji').value=av.emoji;
-  document.getElementById('e-categorie').value=av.categorie;
-  document.getElementById('e-depart-txt').value=av.depart.texte;
-  document.getElementById('e-depart-coords').textContent='📌 '+av.depart.lat+', '+av.depart.lng;
   document.getElementById('e-tresor-txt').value=av.tresor.texte;
   document.getElementById('e-tresor-code').value=av.tresor.code;
   document.getElementById('e-tresor-coords').textContent='📌 '+av.tresor.lat+', '+av.tresor.lng;
   renderEditorIndices(av);switchTab('editeur');aEditing=null;
   if(!aMap)setTimeout(initAdminMap,100);else setTimeout(function(){aMapRefresh(av);},100);
 }
-document.getElementById('btn-editor-back').onclick=function(){saveEditorToAv();sauverAv();document.getElementById('editor-av').classList.remove('on');document.getElementById('editor-ph').style.display='';aAvId=null;aEditing=null;renderAdminListe();switchTab('aventures');};
-// Champs texte : event 'input'
-['e-nom','e-emoji','e-depart-txt','e-tresor-txt','e-tresor-code'].forEach(function(id){
-  document.getElementById(id).addEventListener('input',function(){saveEditorToAv();sauverAv();});
-});
-// Select catégorie : event 'change' (obligatoire pour les <select>)
-document.getElementById('e-categorie').addEventListener('change',function(){saveEditorToAv();sauverAv();});
-function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;
-  av.nom=document.getElementById('e-nom').value||av.nom;
-  av.emoji=document.getElementById('e-emoji').value||av.emoji;
-  av.categorie=document.getElementById('e-categorie').value;
-  if(!av.depart)av.depart={lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:''};
-  av.depart.texte=document.getElementById('e-depart-txt').value;
-  av.tresor.texte=document.getElementById('e-tresor-txt').value;
-  av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);
-}
+document.getElementById('btn-editor-back').onclick=function(){saveEditorToAv();document.getElementById('editor-av').classList.remove('on');document.getElementById('editor-ph').style.display='';aAvId=null;aEditing=null;renderAdminListe();switchTab('aventures');};
+['e-nom','e-emoji','e-tresor-txt','e-tresor-code'].forEach(function(id){document.getElementById(id).addEventListener('input',saveEditorToAv);});
+function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);}
 
 /* Indices éditeur */
 function renderEditorIndices(av){
@@ -1088,7 +924,6 @@ document.getElementById('btn-add-ind').onclick=function(){var av=avById(aAvId);i
 function suppIndice(id){var av=avById(aAvId);if(!av||av.indices.length<=1){toast('⚠️ Minimum 1 indice');return;}av.indices=av.indices.filter(function(x){return x.id!==id;});renderEditorIndices(av);if(aMap)aMapRefresh(av);toast('🗑️ Supprimé');}
 function activerPosIndice(id){aEditing={type:'indice',id:id};document.querySelectorAll('.bpos').forEach(function(b){b.classList.remove('on');});var btn=document.getElementById('ipos-'+id);if(btn)btn.classList.add('on');document.getElementById('amap-hint').textContent='👆 Clique ou glisse pour positionner l’indice';var av=avById(aAvId);var ind=av&&av.indices.find(function(x){return x.id===id;});if(ind&&aMap)aMap.flyTo([ind.lat,ind.lng],18,{duration:.5});if(av)aMapRefresh(av);}
 document.getElementById('btn-pos-tresor').onclick=function(){aEditing={type:'tresor'};document.querySelectorAll('.bpos').forEach(function(b){b.classList.remove('on');});this.classList.add('on');document.getElementById('amap-hint').textContent='👆 Clique pour placer le trésor';var av=avById(aAvId);if(aMap&&av)aMap.flyTo([av.tresor.lat,av.tresor.lng],18,{duration:.5});};
-document.getElementById('btn-pos-depart').onclick=function(){aEditing={type:'depart'};document.querySelectorAll('.bpos').forEach(function(b){b.classList.remove('on');});this.classList.add('on');document.getElementById('amap-hint').textContent='🟢 Clique pour placer le point de départ';var av=avById(aAvId);if(aMap&&av&&av.depart)aMap.flyTo([av.depart.lat,av.depart.lng],18,{duration:.5});};
 
 /* Carte admin */
 function initAdminMap(){
@@ -1106,7 +941,6 @@ function initAdminMap(){
     var lat=parseFloat(e.latlng.lat.toFixed(6)),lng=parseFloat(e.latlng.lng.toFixed(6));
     var av=avById(aAvId);if(!av)return;
     if(aEditing.type==='indice'){var ind=av.indices.find(function(x){return x.id===aEditing.id;});if(ind){ind.lat=lat;ind.lng=lng;document.getElementById('icrd-'+ind.id).textContent='📌 '+lat+', '+lng;}}
-    else if(aEditing.type==='depart'){if(!av.depart)av.depart={texte:''};av.depart.lat=lat;av.depart.lng=lng;document.getElementById('e-depart-coords').textContent='📌 '+lat+', '+lng;}
     else{av.tresor.lat=lat;av.tresor.lng=lng;document.getElementById('e-tresor-coords').textContent='📌 '+lat+', '+lng;}
     aMapRefresh(av);toast('📍 Mis à jour !');
   });
@@ -1130,21 +964,12 @@ function aMapRefresh(av){
   var mT=L.marker([av.tresor.lat,av.tresor.lng],{icon:icoT,draggable:true}).addTo(aMap);
   mT.bindTooltip('🏆 Trésor final');
   mT.on('dragend',function(ev){var a=avById(aAvId);if(a){a.tresor.lat=parseFloat(ev.target.getLatLng().lat.toFixed(6));a.tresor.lng=parseFloat(ev.target.getLatLng().lng.toFixed(6));document.getElementById('e-tresor-coords').textContent='📌 '+a.tresor.lat+', '+a.tresor.lng;toast('🏆 Trésor déplacé !');}});
-  aMarkers.push(mT);
-  if(av.depart){
-    var selD=aEditing&&aEditing.type==='depart';
-    var icoD=L.divIcon({className:'',html:'<div style="width:40px;height:40px;background:'+(selD?'white':'#22c55e')+';border:3px solid '+(selD?'#22c55e':'white')+';border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem'+(selD?';box-shadow:0 0 0 4px #22c55e':'')+' ">🟢</div>',iconSize:[40,40],iconAnchor:[20,20]});
-    var mD=L.marker([av.depart.lat,av.depart.lng],{icon:icoD,draggable:true}).addTo(aMap);
-    mD.bindTooltip('🟢 Point de départ');
-    mD.on('dragend',function(ev){var a=avById(aAvId);if(a&&a.depart){a.depart.lat=parseFloat(ev.target.getLatLng().lat.toFixed(6));a.depart.lng=parseFloat(ev.target.getLatLng().lng.toFixed(6));document.getElementById('e-depart-coords').textContent='📌 '+a.depart.lat+', '+a.depart.lng;toast('🟢 Départ déplacé !');}});
-    aMarkers.push(mD);
-  }
-  aMap.invalidateSize();
+  aMarkers.push(mT);aMap.invalidateSize();
 }
 
 /* ── DOMContentLoaded ── */
 window.addEventListener('DOMContentLoaded',function(){
-  chargerAv();
+  chargerAvGithub();
   var sv=chargerPartie();
   if(sv&&sv.enChasse&&sv.ordreIds&&sv.ordreIds.length){
     var av=avById(sv.avId)||aventures[0];
@@ -1155,5 +980,14 @@ window.addEventListener('DOMContentLoaded',function(){
   }
 });
 </script>
+
+
+
+
+
+
+
+
+
 </body>
 </html>
