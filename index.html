@@ -534,44 +534,13 @@ var AV0={id:'default',nom:'La Grande Chasse du CC',emoji:'🏴‍☠️',active:
 
 /* ── Aventures ── */
 var aventures=[];
-function chargerAv(){
-  try{var r=localStorage.getItem(CLE_AV);if(r)aventures=JSON.parse(r);}catch(e){}
-  if(!aventures.length)aventures=[JSON.parse(JSON.stringify(AV0))];
-}
-async function chargerAvGithub(){
-  if(!GITHUB_RAW_URL){chargerAv();return;}
-  try{
-    var resp=await fetch(GITHUB_RAW_URL+'?t='+Date.now(),{cache:'no-store'});
-    if(resp.ok){var data=await resp.json();
-      if(Array.isArray(data)&&data.length){
-        aventures=data;localStorage.setItem(CLE_AV,JSON.stringify(aventures));
-        afficherStatutGH('✅ Chargé depuis GitHub');return;}}
-  }catch(e){console.warn('GitHub:',e);}
-  chargerAv();afficherStatutGH('📴 Hors ligne');
-}
-function sauverAv(){
-  try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}
-  if(GITHUB_TOKEN&&GITHUB_API_URL){sauverAvGithub();}
-  else{afficherStatutGH('💾 Sauvegardé localement');}
-}
-async function sauverAvGithub(){
-  try{
-    var r1=await fetch(GITHUB_API_URL,{headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json'}});
-    var sha='';if(r1.ok){var meta=await r1.json();sha=meta.sha||'';}
-    var content=btoa(unescape(encodeURIComponent(JSON.stringify(aventures,null,2))));
-    var body={message:'MAJ aventures '+new Date().toISOString(),content:content};
-    if(sha)body.sha=sha;
-    var r2=await fetch(GITHUB_API_URL,{method:'PUT',headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
-    afficherStatutGH(r2.ok?'☁️ Sauvegardé sur GitHub !':'⚠️ Erreur GitHub');
-  }catch(e){afficherStatutGH('⚠️ Erreur: '+e.message);}
-}
-function afficherStatutGH(msg){
-  var el=document.getElementById('gh-status');if(!el)return;
-  el.textContent=msg;el.style.opacity='1';
-  clearTimeout(el._t);el._t=setTimeout(function(){el.style.opacity='0';},4000);
-}
+function chargerAv(){try{var r=localStorage.getItem(CLE_AV);if(r)aventures=JSON.parse(r);}catch(e){}if(!aventures.length)aventures=[JSON.parse(JSON.stringify(AV0))];}
+async function chargerAvGithub(){if(!GITHUB_RAW_URL){chargerAv();return;}try{var resp=await fetch(GITHUB_RAW_URL+'?t='+Date.now(),{cache:'no-store'});if(resp.ok){var data=await resp.json();if(Array.isArray(data)&&data.length){aventures=data;localStorage.setItem(CLE_AV,JSON.stringify(aventures));afficherStatutGH('✅ Chargé depuis GitHub');return;}}}catch(e){console.warn('GitHub:',e);}chargerAv();afficherStatutGH('📴 Hors ligne');}
+function sauverAv(){try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}if(GITHUB_TOKEN&&GITHUB_API_URL){sauverAvGithub();}else{afficherStatutGH('💾 Sauvegardé localement');}}
+async function sauverAvGithub(){try{var r1=await fetch(GITHUB_API_URL,{headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json'}});var sha='';if(r1.ok){var meta=await r1.json();sha=meta.sha||'';}var content=btoa(unescape(encodeURIComponent(JSON.stringify(aventures,null,2))));var body={message:'MAJ aventures '+new Date().toISOString(),content:content};if(sha)body.sha=sha;var r2=await fetch(GITHUB_API_URL,{method:'PUT',headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});afficherStatutGH(r2.ok?'☁️ Sauvegardé !':'⚠️ Erreur GitHub');}catch(e){afficherStatutGH('⚠️ Erreur: '+e.message);}}
+function afficherStatutGH(msg){var el=document.getElementById('gh-status');if(!el)return;el.textContent=msg;el.style.opacity='1';clearTimeout(el._t);el._t=setTimeout(function(){el.style.opacity='0';},4000);}
 function avActives(){return aventures.filter(function(a){return a.active;});}
-function avFiltrees(){return avActives().filter(function(av){var c=av.categorie||'all';return c===(S.categorie||'all');});}
+function avFiltrees(){return avActives().filter(function(av){var c=av.categorie||'all';return c===(S.categorie||'all');}); }
 function genId(){return 'av_'+Date.now()+'_'+Math.floor(Math.random()*9999);}
 function avById(id){return aventures.find(function(a){return a.id===id;})||aventures[0];}
 
@@ -595,8 +564,8 @@ document.getElementById('btn-equipe').onclick=function(){S.mode='equipe';allerVe
 document.getElementById('btn-ensemble').onclick=function(){S.mode='ensemble';allerVers('ecran-categorie');};
 
 /* ── Choix aventure ── */
-function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';var filt=avFiltrees();if(!filt.length){c.innerHTML='<div style="text-align:center;padding:30px 20px;color:rgba(255,255,255,.5);font-family:var(--f-titre);font-size:.95rem">😕 Aucune aventure pour cette catégorie</div>';return;}filt.forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';d.addEventListener('click',function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');});c.appendChild(d);});}
-document.getElementById('btn-retour-choix').onclick=function(){allerVers('ecran-accueil');};
+function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';var filt=avFiltrees();if(!filt.length){c.innerHTML='<div style="text-align:center;padding:30px;color:rgba(255,255,255,.5)">😕 Aucune aventure pour cette categorie</div>';return;}filt.forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';d.addEventListener('click',function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');});c.appendChild(d);});}
+document.getElementById('btn-retour-choix').onclick=function(){allerVers('ecran-categorie');};
 
 /* ── Tirage ── */
 function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
@@ -604,18 +573,16 @@ function resetTirage(){['ensemble'].forEach(function(s){document.getElementById(
 function faireTirage(sfx){if(!S.avId){toast('⚠️ Choisis une aventure !');return;}var av=avCourante();var baseIds=av.indices.map(function(x){return x.id;});var ids=sfx==='equipe'?shuffle(baseIds):baseIds.slice();S.ordreIds=ids;var c=document.getElementById('tirage-etapes-'+sfx);c.innerHTML='';ids.forEach(function(id,i){var ind=av.indices.find(function(x){return x.id===id;});if(!ind)return;var b=document.createElement('div');b.className='tirage-badge';b.innerHTML='<span>'+(i+1)+'.</span><span>'+ind.label+'</span>';c.appendChild(b);});document.getElementById('tirage-result-'+sfx).classList.add('visible');document.getElementById('btn-go-'+sfx).classList.add('visible');toast('🎲 Tirage !');}
 document.getElementById('btn-tirage-equipe').onclick=function(){faireTirage('equipe');};
 
-/* ── Catégories ── */
 function choisirCategorie(cat){
   S.categorie=cat;
-  allerVers('ecran-choix-aventure');
   renderChoixAv();
+  allerVers('ecran-choix-aventure');
 }
 document.getElementById('btn-cat-moussaillons').onclick=function(){choisirCategorie('moussaillons');};
 document.getElementById('btn-cat-pirates').onclick=function(){choisirCategorie('pirates');};
-var _btnRetCat=document.getElementById('btn-retour-cat');
-if(_btnRetCat)_btnRetCat.onclick=function(){allerVers('ecran-accueil');};
+var _brc=document.getElementById('btn-retour-cat');
+if(_brc)_brc.onclick=function(){allerVers('ecran-accueil');};
 
-/* ── Écran ensemble ── */
 function majEcranEnsemble(){
   var t=document.getElementById('titre-ecran-ensemble');
   var s=document.getElementById('sous-ecran-ensemble');
@@ -624,8 +591,8 @@ function majEcranEnsemble(){
   else{t.textContent='🤝 Tous Ensemble — Ordre :';s.textContent='Les indices se jouent dans cet ordre !';}
 }
 document.getElementById('btn-tirage-ensemble').onclick=function(){faireTirage('ensemble');};
-document.getElementById('btn-retour-equipe').onclick=function(){allerVers(avActives().length>1?'ecran-choix-aventure':'ecran-accueil');};
-document.getElementById('btn-retour-ensemble').onclick=function(){allerVers(avActives().length>1?'ecran-choix-aventure':'ecran-accueil');};
+document.getElementById('btn-retour-equipe').onclick=function(){allerVers(avFiltrees().length>1?'ecran-choix-aventure':'ecran-categorie');};
+document.getElementById('btn-retour-ensemble').onclick=function(){allerVers(avFiltrees().length>1?'ecran-choix-aventure':'ecran-categorie');};
 document.getElementById('btn-go-equipe').onclick=function(){S.nomEq=document.getElementById('input-nom-equipe').value.trim()||'Les Pirates';demarrerChasse(false);};
 document.getElementById('btn-go-ensemble').onclick=function(){if(!S.ordreIds.length&&S.avId){var av=avCourante();S.ordreIds=av.indices.map(function(x){return x.id;});}demarrerChasse(false);};
 
