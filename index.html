@@ -854,6 +854,7 @@ function editerAv(id){
   document.getElementById('editor-av').classList.add('on');
   document.getElementById('e-nom').value=av.nom;
   document.getElementById('e-emoji').value=av.emoji;
+  document.getElementById('e-categorie').value=av.categorie||'all';
   document.getElementById('e-tresor-txt').value=av.tresor.texte;
   document.getElementById('e-tresor-code').value=av.tresor.code;
   document.getElementById('e-tresor-coords').textContent='📌 '+av.tresor.lat+', '+av.tresor.lng;
@@ -862,7 +863,7 @@ function editerAv(id){
 }
 document.getElementById('btn-editor-back').onclick=function(){saveEditorToAv();document.getElementById('editor-av').classList.remove('on');document.getElementById('editor-ph').style.display='';aAvId=null;aEditing=null;renderAdminListe();switchTab('aventures');};
 ['e-nom','e-emoji','e-tresor-txt','e-tresor-code'].forEach(function(id){document.getElementById(id).addEventListener('input',saveEditorToAv);});
-function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);}
+function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.categorie=document.getElementById('e-categorie').value;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);}
 
 /* Indices éditeur */
 function renderEditorIndices(av){
