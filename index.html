@@ -557,7 +557,7 @@ function sauverAv(){
 async function sauverAvGithub(){
   try{
     var r1=await fetch(GITHUB_API_URL,{headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json'}});
-    var sha='';if(r1.ok){var m=await r1.json();sha=m.sha||'';}
+    var sha='';if(r1.ok){var meta=await r1.json();sha=meta.sha||'';}
     var content=btoa(unescape(encodeURIComponent(JSON.stringify(aventures,null,2))));
     var body={message:'MAJ aventures '+new Date().toISOString(),content:content};
     if(sha)body.sha=sha;
@@ -576,7 +576,7 @@ function genId(){return 'av_'+Date.now()+'_'+Math.floor(Math.random()*9999);}
 function avById(id){return aventures.find(function(a){return a.id===id;})||aventures[0];}
 
 /* ── Partie ── */
-var S={mode:null,nomEq:'',avId:null,ordreIds:[],etape:0,codeOk:false,tentatives:0,panneauOuvert:true,chrono:0,enChasse:false,tresorPhase:false,modeImg:true};
+var S={mode:null,nomEq:'',avId:null,categorie:'',ordreIds:[],etape:0,codeOk:false,tentatives:0,panneauOuvert:true,chrono:0,enChasse:false,tresorPhase:false,modeImg:true};
 var chronoT=null,mGPS=null,cercleGPS=null,mIndices=[],theMap=null,layerImg=null,gpsInit=false;
 function avCourante(){return avById(S.avId);}
 function indicesJeu(){var av=avCourante();return S.ordreIds.map(function(id){return av.indices.find(function(x){return x.id===id;});}).filter(Boolean);}
@@ -591,11 +591,11 @@ function afficherJeu(){allerVers(null);document.getElementById('header').classLi
 
 /* ── Accueil ── */
 function choisirMode(mode){S.mode=mode;var act=avActives();if(!act.length){toast('⚠️ Aucune aventure activée !');return;}if(act.length===1){S.avId=act[0].id;allerVers(mode==='equipe'?'ecran-equipe':'ecran-ensemble');}else{renderChoixAv();allerVers('ecran-choix-aventure');}}
-document.getElementById('btn-equipe').onclick=function(){choisirMode('equipe');};
-document.getElementById('btn-ensemble').onclick=function(){choisirMode('ensemble');};
+document.getElementById('btn-equipe').onclick=function(){S.mode='equipe';allerVers('ecran-categorie');};
+document.getElementById('btn-ensemble').onclick=function(){S.mode='ensemble';allerVers('ecran-categorie');};
 
 /* ── Choix aventure ── */
-function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';avActives().forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';d.addEventListener('click',function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');});c.appendChild(d);});}
+function renderChoixAv(){var c=document.getElementById('liste-av-joueur');c.innerHTML='';var filt=avFiltrees();if(!filt.length){c.innerHTML='<div style="text-align:center;padding:30px 20px;color:rgba(255,255,255,.5);font-family:var(--f-titre);font-size:.95rem">😕 Aucune aventure pour cette catégorie</div>';return;}filt.forEach(function(av){var d=document.createElement('div');d.className='aventure-item';d.innerHTML='<span class="av-emoji">'+av.emoji+'</span><div><div class="av-nom">'+av.nom+'</div><div class="av-info">'+av.indices.length+' indices</div></div>';d.addEventListener('click',function(){S.avId=av.id;resetTirage();majEcranEnsemble();allerVers('ecran-ensemble');});c.appendChild(d);});}
 document.getElementById('btn-retour-choix').onclick=function(){allerVers('ecran-accueil');};
 
 /* ── Tirage ── */
@@ -604,6 +604,18 @@ function resetTirage(){['ensemble'].forEach(function(s){document.getElementById(
 function faireTirage(sfx){if(!S.avId){toast('⚠️ Choisis une aventure !');return;}var av=avCourante();var baseIds=av.indices.map(function(x){return x.id;});var ids=sfx==='equipe'?shuffle(baseIds):baseIds.slice();S.ordreIds=ids;var c=document.getElementById('tirage-etapes-'+sfx);c.innerHTML='';ids.forEach(function(id,i){var ind=av.indices.find(function(x){return x.id===id;});if(!ind)return;var b=document.createElement('div');b.className='tirage-badge';b.innerHTML='<span>'+(i+1)+'.</span><span>'+ind.label+'</span>';c.appendChild(b);});document.getElementById('tirage-result-'+sfx).classList.add('visible');document.getElementById('btn-go-'+sfx).classList.add('visible');toast('🎲 Tirage !');}
 document.getElementById('btn-tirage-equipe').onclick=function(){faireTirage('equipe');};
 
+/* ── Catégories ── */
+function choisirCategorie(cat){
+  S.categorie=cat;
+  allerVers('ecran-choix-aventure');
+  renderChoixAv();
+}
+document.getElementById('btn-cat-moussaillons').onclick=function(){choisirCategorie('moussaillons');};
+document.getElementById('btn-cat-pirates').onclick=function(){choisirCategorie('pirates');};
+var _btnRetCat=document.getElementById('btn-retour-cat');
+if(_btnRetCat)_btnRetCat.onclick=function(){allerVers('ecran-accueil');};
+
+/* ── Écran ensemble ── */
 function majEcranEnsemble(){
   var t=document.getElementById('titre-ecran-ensemble');
   var s=document.getElementById('sous-ecran-ensemble');
