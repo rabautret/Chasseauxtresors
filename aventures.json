@@ -74,6 +74,7 @@
       "lat": 48.6378,
       "lng": -4.4458,
       "texte": "Texte de localisation du trésor"
-    }
+    },
+    "categorie": "pirates"
   }
 ]
