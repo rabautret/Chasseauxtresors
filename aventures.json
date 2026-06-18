@@ -1,7 +1,7 @@
 [
   {
     "id": "av_1781815725953_5363",
-    "nom": "TEST GAELLE",
+    "nom": "FoxlTEST GAELLE",
     "emoji": "🗺️",
     "active": false,
     "indices": [
@@ -62,29 +62,6 @@
     "indices": [
       {
         "id": 1781818214060,
-        "code": "0000",
-        "lat": 48.637,
-        "lng": -4.446,
-        "texte": "Texte de l'indice 1",
-        "label": "📍 Lieu 1"
-      }
-    ],
-    "tresor": {
-      "code": "0000",
-      "lat": 48.6378,
-      "lng": -4.4458,
-      "texte": "Texte de localisation du trésor"
-    }
-  },
-  {
-    "id": "av_1781818696245_2102",
-    "nom": "Nouvelle aventurevbjjjj",
-    "emoji": "🗺️",
-    "active": false,
-    "categorie": "moussaillons",
-    "indices": [
-      {
-        "id": 1781818696245,
         "code": "0000",
         "lat": 48.637,
         "lng": -4.446,
