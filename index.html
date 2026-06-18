@@ -414,7 +414,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 </div>
 <!-- ADMIN -->
 <div id="ecran-admin" class="cache">
-  <div id="admin-header"><h2>⚙️ Admin — Aventures</h2><div id="gh-token-zone" style="display:flex;align-items:center;gap:6px;margin-left:8px;"><input id="gh-token-input" type="password" placeholder="🔑 GitHub Token" style="font-size:.72rem;padding:3px 7px;border-radius:6px;border:1px solid #334;background:#0f1f3a;color:#f0f6ff;width:160px;" /><button id="gh-token-save" style="font-size:.72rem;padding:3px 8px;border-radius:6px;background:#1d4ed8;color:#fff;border:none;cursor:pointer;">💾</button><span id="gh-token-status" style="font-size:.68rem;color:#86efac;"></span></div><div id="gh-status" style="font-size:.72rem;color:#86efac;margin-left:8px;max-width:260px;transition:opacity .5s;opacity:0"></div><button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button><button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button></div>
+  <div id="admin-header"><h2>⚙️ Admin — Aventures</h2><div id="gh-token-zone" style="display:flex;align-items:center;gap:5px;margin-left:8px;"><input id="gh-token-input" type="password" placeholder="🔑 Token GitHub" style="font-size:.7rem;padding:4px 8px;border-radius:6px;border:1px solid #334;background:#0f1f3a;color:#f0f6ff;width:155px;" /><button id="gh-token-save" style="font-size:.7rem;padding:4px 9px;border-radius:6px;background:#1d4ed8;color:#fff;border:none;cursor:pointer;white-space:nowrap;">💾 OK</button><span id="gh-token-status" style="font-size:.68rem;color:#86efac;min-width:20px;"></span></div><div id="gh-status" style="font-size:.72rem;color:#86efac;margin-left:8px;max-width:260px;transition:opacity .5s;opacity:0"></div><button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button><button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button></div>
   <div id="admin-tabs"><div class="admin-tab active" data-tab="aventures">🗺️ Aventures</div><div class="admin-tab" data-tab="editeur">✏️ Éditeur</div></div>
   <div id="admin-content">
     <div id="admin-panel-aventures" class="admin-panel active">
@@ -522,7 +522,7 @@ var GPS={hg:{lat:48.6415,lng:-4.4513},bd:{lat:48.6325,lng:-4.4407}};
 var HASH_MDP='e903e187c77a1915acc5affbc2ade00dfead3087c490d222aa9f7a23ad566daf';
 var CLE_AV='tresor_cc_av3',CLE_SAVE='tresor_cc_save3';
 var GITHUB_RAW_URL='https://raw.githubusercontent.com/rabautret/Chasseauxtresors/main/aventures.json';
-var GITHUB_TOKEN='';  /* Token saisi par l'admin dans l'interface */
+var GITHUB_TOKEN='';
 var GITHUB_API_URL='https://api.github.com/repos/rabautret/Chasseauxtresors/contents/aventures.json';
 var CLR=['#f97316','#8b5cf6','#22c55e','#ef4444','#0ea5e9','#f59e0b','#ec4899','#14b8a6'];
 
@@ -542,7 +542,7 @@ var AV0={id:'default',nom:'La Grande Chasse du CC',emoji:'🏴‍☠️',active:
 var aventures=[];
 function chargerAv(){try{var r=localStorage.getItem(CLE_AV);if(r)aventures=JSON.parse(r);}catch(e){}if(!aventures.length)aventures=[JSON.parse(JSON.stringify(AV0))];}
 async function chargerAvGithub(){if(!GITHUB_RAW_URL){chargerAv();return;}try{var resp=await fetch(GITHUB_RAW_URL+'?t='+Date.now(),{cache:'no-store'});if(resp.ok){var data=await resp.json();if(Array.isArray(data)&&data.length){aventures=data;localStorage.setItem(CLE_AV,JSON.stringify(aventures));afficherStatutGH('✅ Chargé depuis GitHub');return;}}}catch(e){console.warn('GitHub:',e);}chargerAv();afficherStatutGH('📴 Hors ligne');}
-function sauverAv(){try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}var _tok=GITHUB_TOKEN||localStorage.getItem('gh_token_cc')||'';if(_tok){GITHUB_TOKEN=_tok;sauverAvGithub();}else{afficherStatutGH('💾 Local — entre ton token GitHub ci-dessus');}}
+function sauverAv(){try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}var _tok=GITHUB_TOKEN||localStorage.getItem('gh_token_cc')||'';if(_tok&&GITHUB_API_URL){GITHUB_TOKEN=_tok;sauverAvGithub();}else{afficherStatutGH('💾 Local — saisis ton token ci-dessus');}}
 async function sauverAvGithub(){try{var r1=await fetch(GITHUB_API_URL,{headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json'}});var sha='';if(r1.ok){var meta=await r1.json();sha=meta.sha||'';}var content=btoa(unescape(encodeURIComponent(JSON.stringify(aventures,null,2))));var body={message:'MAJ aventures '+new Date().toISOString(),content:content};if(sha)body.sha=sha;var r2=await fetch(GITHUB_API_URL,{method:'PUT',headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});afficherStatutGH(r2.ok?'☁️ Sauvegardé !':'⚠️ Erreur GitHub');}catch(e){afficherStatutGH('⚠️ Erreur: '+e.message);}}
 function afficherStatutGH(msg){var el=document.getElementById('gh-status');if(!el)return;el.textContent=msg;el.style.opacity='1';clearTimeout(el._t);el._t=setTimeout(function(){el.style.opacity='0';},4000);}
 function avActives(){return aventures.filter(function(a){return a.active;});}
@@ -946,16 +946,20 @@ function aMapRefresh(av){
 
 /* ── DOMContentLoaded ── */
 window.addEventListener('DOMContentLoaded',function(){
-  /* Charger token sauvegardé */
-  var _tk=localStorage.getItem('gh_token_cc');
-  if(_tk){GITHUB_TOKEN=_tk;document.getElementById('gh-token-input').value='••••••••';}
+  /* Charger token depuis localStorage */
+  var _savedToken=localStorage.getItem('gh_token_cc');
+  if(_savedToken){GITHUB_TOKEN=_savedToken;
+    var _inp=document.getElementById('gh-token-input');
+    if(_inp)_inp.placeholder='🔑 Token enregistré ✓';}
   /* Bouton sauver token */
-  document.getElementById('gh-token-save').onclick=function(){
+  var _btn=document.getElementById('gh-token-save');
+  if(_btn)_btn.onclick=function(){
     var v=document.getElementById('gh-token-input').value.trim();
-    if(!v||v==='••••••••'){document.getElementById('gh-token-status').textContent='⚠️ Vide';return;}
+    if(!v){document.getElementById('gh-token-status').textContent='⚠️';return;}
     GITHUB_TOKEN=v;
     localStorage.setItem('gh_token_cc',v);
-    document.getElementById('gh-token-input').value='••••••••';
+    document.getElementById('gh-token-input').value='';
+    document.getElementById('gh-token-input').placeholder='🔑 Token enregistré ✓';
     document.getElementById('gh-token-status').textContent='✅';
     setTimeout(function(){document.getElementById('gh-token-status').textContent='';},2000);
   };
