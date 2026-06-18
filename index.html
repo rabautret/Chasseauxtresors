@@ -819,8 +819,20 @@ var aMap=null,aMarkers=[],aEditing=null,aAvId=null;
 
 function ouvrirAdmin(){document.getElementById('ecran-accueil').classList.add('cache');document.getElementById('ecran-admin').classList.remove('cache');renderAdminListe();switchTab('aventures');}
 document.getElementById('btn-admin-fermer').onclick=function(){document.getElementById('ecran-admin').classList.add('cache');document.getElementById('ecran-accueil').classList.remove('cache');};
-document.getElementById('btn-admin-sauver').onclick=function(){sauverAv();toast('💾 Sauvegardé !');var s=this;s.textContent='✅ Sauvé !';setTimeout(function(){s.textContent='💾 Sauver';},1500);};
+document.getElementById('btn-admin-sauver').onclick=function(){saveEditorToAv();toast('💾 Sauvegardé !');var s=this;s.textContent='✅ Sauvé !';setTimeout(function(){s.textContent='💾 Sauver';},1500);};
 
+/* ── Auto-save champs éditeur avec debounce 800ms ── */
+var _saveTimer=null;
+function debounceSave(){
+  clearTimeout(_saveTimer);
+  _saveTimer=setTimeout(function(){saveEditorToAv();},800);
+}
+document.addEventListener('input',function(e){
+  if(e.target.closest&&e.target.closest('#editor-av'))debounceSave();
+});
+document.addEventListener('change',function(e){
+  if(e.target.closest&&e.target.closest('#editor-av'))debounceSave();
+});
 document.querySelectorAll('.admin-tab').forEach(function(tab){tab.addEventListener('click',function(){switchTab(this.dataset.tab);});});
 function switchTab(name){document.querySelectorAll('.admin-tab').forEach(function(t){t.classList.toggle('active',t.dataset.tab===name);});document.querySelectorAll('.admin-panel').forEach(function(p){p.classList.toggle('active',p.id==='admin-panel-'+name);});if(name==='editeur'&&aAvId&&!aMap)setTimeout(initAdminMap,60);}
 
@@ -873,7 +885,7 @@ function editerAv(id){
 }
 document.getElementById('btn-editor-back').onclick=function(){saveEditorToAv();document.getElementById('editor-av').classList.remove('on');document.getElementById('editor-ph').style.display='';aAvId=null;aEditing=null;renderAdminListe();switchTab('aventures');};
 ['e-nom','e-emoji','e-tresor-txt','e-tresor-code'].forEach(function(id){document.getElementById(id).addEventListener('input',saveEditorToAv);});
-function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.categorie=document.getElementById('e-categorie').value;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);}
+function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.categorie=document.getElementById('e-categorie').value;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);sauverAv();}
 
 /* Indices éditeur */
 function renderEditorIndices(av){
@@ -967,55 +979,9 @@ window.addEventListener('DOMContentLoaded',function(){
 
 
 
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  var b=document.getElementById('btn-retour-cat');
-  if(b){
-    b.onclick=function(){
-      location.reload();
-    };
-  }
-});
-</script>
 
-<script>
-/* V9.4 Catégories persistantes */
-document.addEventListener('DOMContentLoaded',function(){
 
-  function ensureCats(){
-    if(typeof aventures!=='undefined'){
-      aventures.forEach(a=>{ if(!a.categorie) a.categorie='all'; });
-    }
-  }
-  setTimeout(ensureCats,500);
 
-  // Sauvegarde du champ catégorie dans l'aventure en cours
-  document.addEventListener('change',function(e){
-    if(e.target && e.target.id==='e-categorie'){
-      try{
-        if(typeof aAvId!=='undefined' && typeof aventures!=='undefined'){
-          var av=aventures.find(x=>x.id===aAvId);
-          if(av) av.categorie=e.target.value;
-        }
-      }catch(err){}
-    }
-  });
-
-  // Recharge la catégorie quand on ouvre l'éditeur
-  const iv=setInterval(function(){
-    try{
-      if(typeof aAvId!=='undefined' && typeof aventures!=='undefined'){
-        var sel=document.getElementById('e-categorie');
-        var av=aventures.find(x=>x.id===aAvId);
-        if(sel && av){
-          sel.value=av.categorie||'all';
-        }
-      }
-    }catch(err){}
-  },1000);
-
-});
-</script>
 
 </body>
 </html>
