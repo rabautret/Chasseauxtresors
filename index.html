@@ -522,7 +522,7 @@ var GPS={hg:{lat:48.6415,lng:-4.4513},bd:{lat:48.6325,lng:-4.4407}};
 var HASH_MDP='e903e187c77a1915acc5affbc2ade00dfead3087c490d222aa9f7a23ad566daf';
 var CLE_AV='tresor_cc_av3',CLE_SAVE='tresor_cc_save3';
 var GITHUB_RAW_URL='https://raw.githubusercontent.com/rabautret/Chasseauxtresors/main/aventures.json';
-var GITHUB_TOKEN='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';
+var GITHUB_TOKEN='';
 var GITHUB_API_URL='https://api.github.com/repos/rabautret/Chasseauxtresors/contents/aventures.json';
 var CLR=['#f97316','#8b5cf6','#22c55e','#ef4444','#0ea5e9','#f59e0b','#ec4899','#14b8a6'];
 
@@ -543,7 +543,67 @@ var aventures=[];
 function chargerAv(){try{var r=localStorage.getItem(CLE_AV);if(r)aventures=JSON.parse(r);}catch(e){}if(!aventures.length)aventures=[JSON.parse(JSON.stringify(AV0))];}
 async function chargerAvGithub(){if(!GITHUB_RAW_URL){chargerAv();return;}try{var resp=await fetch(GITHUB_RAW_URL+'?t='+Date.now(),{cache:'no-store'});if(resp.ok){var data=await resp.json();if(Array.isArray(data)&&data.length){aventures=data;localStorage.setItem(CLE_AV,JSON.stringify(aventures));afficherStatutGH('✅ Chargé depuis GitHub');return;}}}catch(e){console.warn('GitHub:',e);}chargerAv();afficherStatutGH('📴 Hors ligne');}
 function sauverAv(){try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}if(GITHUB_TOKEN&&GITHUB_API_URL){sauverAvGithub();}else{afficherStatutGH('💾 Sauvegardé localement');}}
-async function sauverAvGithub(){try{var r1=await fetch(GITHUB_API_URL,{headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json'}});var sha='';if(r1.ok){var meta=await r1.json();sha=meta.sha||'';}var content=btoa(unescape(encodeURIComponent(JSON.stringify(aventures,null,2))));var body={message:'MAJ aventures '+new Date().toISOString(),content:content};if(sha)body.sha=sha;var r2=await fetch(GITHUB_API_URL,{method:'PUT',headers:{Authorization:'token '+GITHUB_TOKEN,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});afficherStatutGH(r2.ok?'☁️ Sauvegardé !':'⚠️ Erreur GitHub');}catch(e){afficherStatutGH('⚠️ Erreur: '+e.message);}}
+async function sauverAvGithub(){
+  afficherStatutGH('⏳ Sauvegarde GitHub...');
+  try{
+    /* 1. Récupérer le SHA du fichier existant (nécessaire pour le PUT) */
+    var sha='';
+    var r1=await fetch(GITHUB_API_URL,{
+      headers:{
+        'Authorization':'token '+GITHUB_TOKEN,
+        'Accept':'application/vnd.github.v3+json',
+        'Cache-Control':'no-cache'
+      }
+    });
+    if(r1.ok){
+      var meta=await r1.json();
+      sha=meta.sha||'';
+    } else if(r1.status!==404){
+      /* 404 = fichier n'existe pas encore, c'est OK */
+      var errText=await r1.text();
+      afficherStatutGH('⚠️ GitHub GET err '+r1.status);
+      console.error('GitHub GET:',r1.status,errText);
+      return;
+    }
+
+    /* 2. Encoder le contenu en base64 (compatible tous navigateurs) */
+    var json=JSON.stringify(aventures,null,2);
+    var bytes=new TextEncoder().encode(json);
+    var binary='';
+    bytes.forEach(function(b){binary+=String.fromCharCode(b);});
+    var content=btoa(binary);
+
+    /* 3. Pousser le fichier */
+    var body={
+      message:'MAJ aventures CC '+new Date().toLocaleString('fr-FR'),
+      content:content
+    };
+    if(sha)body.sha=sha;
+
+    var r2=await fetch(GITHUB_API_URL,{
+      method:'PUT',
+      headers:{
+        'Authorization':'token '+GITHUB_TOKEN,
+        'Accept':'application/vnd.github.v3+json',
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify(body)
+    });
+
+    if(r2.ok){
+      afficherStatutGH('☁️ Sauvegardé sur GitHub !');
+    } else {
+      var err=await r2.json().catch(function(){return {};});
+      var msg=err.message||r2.status;
+      afficherStatutGH('⚠️ GitHub: '+msg);
+      console.error('GitHub PUT:',r2.status,err);
+    }
+  }catch(e){
+    afficherStatutGH('⚠️ Erreur: '+e.message);
+    console.error('sauverAvGithub:',e);
+  }
+}
+
 function afficherStatutGH(msg){var el=document.getElementById('gh-status');if(!el)return;el.textContent=msg;el.style.opacity='1';clearTimeout(el._t);el._t=setTimeout(function(){el.style.opacity='0';},4000);}
 function avActives(){return aventures.filter(function(a){return a.active;});}
 function avFiltrees(){return avActives().filter(function(av){var c=av.categorie||'all';return c===(S.categorie||'all');}); }
@@ -819,20 +879,8 @@ var aMap=null,aMarkers=[],aEditing=null,aAvId=null;
 
 function ouvrirAdmin(){document.getElementById('ecran-accueil').classList.add('cache');document.getElementById('ecran-admin').classList.remove('cache');renderAdminListe();switchTab('aventures');}
 document.getElementById('btn-admin-fermer').onclick=function(){document.getElementById('ecran-admin').classList.add('cache');document.getElementById('ecran-accueil').classList.remove('cache');};
-document.getElementById('btn-admin-sauver').onclick=function(){saveEditorToAv();toast('💾 Sauvegardé !');var s=this;s.textContent='✅ Sauvé !';setTimeout(function(){s.textContent='💾 Sauver';},1500);};
+document.getElementById('btn-admin-sauver').onclick=function(){sauverAv();toast('💾 Sauvegardé !');var s=this;s.textContent='✅ Sauvé !';setTimeout(function(){s.textContent='💾 Sauver';},1500);};
 
-/* ── Auto-save champs éditeur avec debounce 800ms ── */
-var _saveTimer=null;
-function debounceSave(){
-  clearTimeout(_saveTimer);
-  _saveTimer=setTimeout(function(){saveEditorToAv();},800);
-}
-document.addEventListener('input',function(e){
-  if(e.target.closest&&e.target.closest('#editor-av'))debounceSave();
-});
-document.addEventListener('change',function(e){
-  if(e.target.closest&&e.target.closest('#editor-av'))debounceSave();
-});
 document.querySelectorAll('.admin-tab').forEach(function(tab){tab.addEventListener('click',function(){switchTab(this.dataset.tab);});});
 function switchTab(name){document.querySelectorAll('.admin-tab').forEach(function(t){t.classList.toggle('active',t.dataset.tab===name);});document.querySelectorAll('.admin-panel').forEach(function(p){p.classList.toggle('active',p.id==='admin-panel-'+name);});if(name==='editeur'&&aAvId&&!aMap)setTimeout(initAdminMap,60);}
 
@@ -885,7 +933,7 @@ function editerAv(id){
 }
 document.getElementById('btn-editor-back').onclick=function(){saveEditorToAv();document.getElementById('editor-av').classList.remove('on');document.getElementById('editor-ph').style.display='';aAvId=null;aEditing=null;renderAdminListe();switchTab('aventures');};
 ['e-nom','e-emoji','e-tresor-txt','e-tresor-code'].forEach(function(id){document.getElementById(id).addEventListener('input',saveEditorToAv);});
-function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.categorie=document.getElementById('e-categorie').value;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);sauverAv();}
+function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.categorie=document.getElementById('e-categorie').value;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);}
 
 /* Indices éditeur */
 function renderEditorIndices(av){
