@@ -1,1 +1,151 @@
-[]
+[
+  {
+    "id": "default",
+    "nom": "Campingpourlavie",
+    "emoji": "🏴‍☠️",
+    "active": true,
+    "indices": [
+      {
+        "id": 1,
+        "code": "0000",
+        "lat": 48.638845,
+        "lng": -4.44113,
+        "texte": "Cherche là où l'on entre dans le camping… À droite du portail. Test ",
+        "label": "🚪 Entrée"
+      },
+      {
+        "id": 2,
+        "code": "0000",
+        "lat": 48.634842,
+        "lng": -4.446008,
+        "texte": "Là où les tentes dorment. Sous le piquet de l'emplacement 12.",
+        "label": "⛺ Emplacements"
+      },
+      {
+        "id": 3,
+        "code": "0000",
+        "lat": 48.638335,
+        "lng": -4.44304,
+        "texte": "Eau fraîche et savon… derrière le miroir.",
+        "label": "🚿 Sanitaires"
+      },
+      {
+        "id": 4,
+        "code": "0000",
+        "lat": 48.639961,
+        "lng": -4.444778,
+        "texte": "Les enfants crient et grimpent. Cherche sous la balançoire.",
+        "label": "🛝 Aire de jeux"
+      },
+      {
+        "id": 5,
+        "code": "0000",
+        "lat": 48.636099,
+        "lng": -4.448404,
+        "texte": "À l'ombre des arbres le midi. Sous la 3ème table.",
+        "label": "🌳 Pique-nique"
+      },
+      {
+        "id": 6,
+        "code": "0000",
+        "lat": 48.639039,
+        "lng": -4.445422,
+        "texte": "La mer est proche… au panneau du GR34.",
+        "label": "🌊 Plage GR34"
+      }
+    ],
+    "tresor": {
+      "code": "0000",
+      "lat": 48.637063,
+      "lng": -4.446502,
+      "texte": "Sous la grande pierre plate près de l'entrée. Tu l'as mérité !"
+    },
+    "categories": [
+      "moussaillons",
+      "pirates"
+    ],
+    "categorie": "pirates"
+  },
+  {
+    "id": "av_1781699045560_4038",
+    "nom": "Nouvelle aventure",
+    "emoji": "🗺️",
+    "active": true,
+    "indices": [
+      {
+        "id": 1781699045560,
+        "code": "0000",
+        "lat": 48.637,
+        "lng": -4.446,
+        "texte": "Texte de l'indice 1",
+        "label": "📍 Lieu 1"
+      }
+    ],
+    "tresor": {
+      "code": "0000",
+      "lat": 48.6378,
+      "lng": -4.4458,
+      "texte": "Texte de localisation du trésor"
+    },
+    "categories": [
+      "moussaillons",
+      "pirates"
+    ],
+    "categorie": "moussaillons"
+  },
+  {
+    "id": "av_1781815725953_5363",
+    "nom": "TEST GAELLE",
+    "emoji": "🗺️",
+    "active": false,
+    "indices": [
+      {
+        "id": 1781815725953,
+        "code": "0000",
+        "lat": 48.63574,
+        "lng": -4.446316,
+        "texte": "Texte de l'indice 1",
+        "label": "📍 Lieu 1"
+      },
+      {
+        "id": 1781815745807,
+        "code": "0000",
+        "lat": 48.636146,
+        "lng": -4.443498,
+        "texte": "Nouvel indice",
+        "label": "📍 Nouveau lieu"
+      },
+      {
+        "id": 1781815747740,
+        "code": "0000",
+        "lat": 48.637073,
+        "lng": -4.447031,
+        "texte": "Nouvel indice",
+        "label": "📍 Nouveau lieu"
+      },
+      {
+        "id": 1781815749023,
+        "code": "0000",
+        "lat": 48.638992,
+        "lng": -4.445229,
+        "texte": "Nouvel indice",
+        "label": "📍 Nouveau lieu"
+      },
+      {
+        "id": 1781815750474,
+        "code": "0000",
+        "lat": 48.637824,
+        "lng": -4.443419,
+        "texte": "Nouvel indice",
+        "label": "📍 Nouveau lieu"
+      }
+    ],
+    "tresor": {
+      "code": "0000",
+      "lat": 48.636969,
+      "lng": -4.445357,
+      "texte": "Texte de localisation du trésor"
+    },
+    "categorie": "moussaillons"
+  }
+]
