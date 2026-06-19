@@ -50,7 +50,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 @keyframes coffre-glow{0%,100%{filter:drop-shadow(0 0 6px rgba(251,191,36,.4))}50%{filter:drop-shadow(0 0 18px rgba(251,191,36,.9))}}
 #carte-deco{position:absolute;bottom:12%;left:20%;width:34px;opacity:.7;animation:carte-rotate 8s ease-in-out infinite}
 @keyframes carte-rotate{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
-#breton{position:absolute;bottom:0;right:26%;width:62px;transform-origin:bottom center;animation:breton-sway 1.8s ease-in-out infinite}
+#breton{position:absolute;bottom:0;right:26%;width:62px;transform-origin:bottom center;animation:breton-sway 1.8s ease-in-out infinite}.breton2{position:absolute;bottom:0;left:20%;width:62px;transform-origin:bottom center;animation:breton-sway 2.1s ease-in-out infinite reverse;transform:scaleX(-1)}#breton2-bras{animation:bras-agite .8s ease-in-out infinite reverse;transform-origin:28px 18px}
 @keyframes breton-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
 #breton-bras{animation:bras-agite .65s ease-in-out infinite;transform-origin:8px 18px}
 @keyframes bras-agite{0%,100%{transform:rotate(-35deg)}50%{transform:rotate(20deg)}}
@@ -359,6 +359,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
         </g>
       </g>
     </svg>
+    <svg class="breton2" viewBox="0 0 62 115"><line x1="25" y1="85" x2="18" y2="113" stroke="#1a1a1a" stroke-width="5.5" stroke-linecap="round"/><line x1="33" y1="85" x2="40" y2="113" stroke="#1a1a1a" stroke-width="5.5" stroke-linecap="round"/><rect x="17" y="74" width="24" height="15" rx="3" fill="white"/><rect x="17" y="74" width="24" height="2.8" fill="#1a1a1a"/><rect x="17" y="79.6" width="24" height="2.8" fill="#1a1a1a"/><rect x="17" y="85.2" width="24" height="2.8" fill="#1a1a1a"/><line x1="22" y1="55" x2="10" y2="72" stroke="#c8845a" stroke-width="5" stroke-linecap="round"/><rect x="18" y="50" width="22" height="28" rx="5" fill="#c8845a"/><circle cx="29" cy="37" r="14" fill="#c8845a"/><ellipse cx="15" cy="38" rx="3" ry="3.5" fill="#bf7a50"/><ellipse cx="43" cy="38" rx="3" ry="3.5" fill="#bf7a50"/><rect x="21" y="49" width="16" height="5" rx="2" fill="#bf7a50"/><circle cx="24" cy="36" r="2.2" fill="#3d1f00"/><circle cx="34" cy="36" r="2.2" fill="#3d1f00"/><path d="M24 43 Q29 47 34 43" stroke="#3d1f00" stroke-width="1.5" fill="none" stroke-linecap="round"/><g id="breton2-bras"><line x1="34" y1="55" x2="50" y2="36" stroke="#c8845a" stroke-width="5" stroke-linecap="round"/><line x1="50" y1="36" x2="50" y2="8" stroke="#8B5E3C" stroke-width="2.5" stroke-linecap="round"/><rect x="50" y="8" width="28" height="18" fill="white"/><rect x="50" y="8" width="28" height="3" fill="#1a1a1a"/><rect x="50" y="14" width="28" height="3" fill="#1a1a1a"/><rect x="50" y="20" width="28" height="3" fill="#1a1a1a"/><circle cx="56" cy="9.5" r="1.1" fill="white"/><circle cx="64" cy="9.5" r="1.1" fill="white"/><circle cx="56" cy="15.5" r="1.1" fill="white"/><circle cx="64" cy="15.5" r="1.1" fill="white"/><rect x="50" y="8" width="28" height="18" fill="none" stroke="#aaa" stroke-width=".4"/></g></svg>
   </div>
   <svg id="palmier-g" viewBox="0 0 90 160"><path d="M42 160 Q38 120 40 80 Q41 40 45 20" stroke="#8B5E3C" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M42 160 Q46 120 44 80 Q43 40 45 20" stroke="#A0714F" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M45 20 Q20 5 5 18" stroke="#2d7a0f" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M45 20 Q30 0 45 -5" stroke="#3a9e15" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M45 20 Q60 2 75 12" stroke="#2d7a0f" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M45 20 Q55 8 80 5" stroke="#3a9e15" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M45 20 Q25 15 8 30" stroke="#2d7a0f" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M45 20 Q65 15 85 28" stroke="#2d7a0f" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="44" cy="26" r="5" fill="#8B4513"/><circle cx="52" cy="22" r="4" fill="#7a3c10"/></svg>
   <svg id="palmier-d" viewBox="0 0 80 140"><path d="M38 140 Q42 105 38 70 Q36 35 40 15" stroke="#8B5E3C" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M38 140 Q34 105 37 70 Q39 35 40 15" stroke="#A0714F" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M40 15 Q15 5 2 16" stroke="#2d7a0f" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M40 15 Q55 0 70 10" stroke="#3a9e15" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M40 15 Q28 2 38 -3" stroke="#2d7a0f" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M40 15 Q60 5 75 20" stroke="#2d7a0f" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M40 15 Q18 18 5 30" stroke="#3a9e15" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="40" cy="20" r="5" fill="#8B4513"/></svg>
@@ -542,7 +543,7 @@ var AV0={id:'default',nom:'La Grande Chasse du CC',emoji:'🏴‍☠️',active:
 var aventures=[];
 function chargerAv(){try{var r=localStorage.getItem(CLE_AV);if(r)aventures=JSON.parse(r);}catch(e){}if(!aventures.length)aventures=[JSON.parse(JSON.stringify(AV0))];}
 async function chargerAvGithub(){if(!GITHUB_RAW_URL){chargerAv();return;}try{var resp=await fetch(GITHUB_RAW_URL+'?t='+Date.now(),{cache:'no-store'});if(resp.ok){var data=await resp.json();if(Array.isArray(data)&&data.length){aventures=data;localStorage.setItem(CLE_AV,JSON.stringify(aventures));afficherStatutGH('✅ Chargé depuis GitHub');return;}}}catch(e){console.warn('GitHub:',e);}chargerAv();afficherStatutGH('📴 Hors ligne');}
-function sauverAv(){try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}var _gt=GITHUB_TOKEN||localStorage.getItem('gh_token_cc')||'';if(_gt){GITHUB_TOKEN=_gt;sauverAvGithub();}else{afficherStatutGH('💾 Local — token manquant');}}
+function sauverAv(){try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}if(GITHUB_TOKEN&&GITHUB_API_URL){sauverAvGithub();}else{afficherStatutGH('💾 Sauvegardé localement');}}
 async function sauverAvGithub(){
   afficherStatutGH('⏳ GitHub...');
   var tok=GITHUB_TOKEN||localStorage.getItem('gh_token_cc')||'';
@@ -553,7 +554,7 @@ async function sauverAvGithub(){
     var r1=await fetch(GITHUB_API_URL,{headers:{'Authorization':'Bearer '+tok,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}});
     if(r1.ok){var m=await r1.json();sha=m.sha||'';}
     else if(r1.status===401){afficherStatutGH('⚠️ 401 — Régénère ton token');return;}
-    else if(r1.status===403){afficherStatutGH('⚠️ 403 — Vérifie les droits repo');return;}
+    else if(r1.status===403){afficherStatutGH('⚠️ 403 — droits repo ?');return;}
     else if(r1.status!==404){afficherStatutGH('⚠️ GET '+r1.status);return;}
     var bytes=new TextEncoder().encode(JSON.stringify(aventures,null,2));
     var bin='';for(var i=0;i<bytes.length;i++)bin+=String.fromCharCode(bytes[i]);
@@ -975,8 +976,7 @@ window.addEventListener('DOMContentLoaded',function(){
   if(_btn)_btn.addEventListener('click',function(){
     var v=(_inp?_inp.value:'').trim();
     if(!v)return;
-    GITHUB_TOKEN=v;
-    localStorage.setItem('gh_token_cc',v);
+    GITHUB_TOKEN=v;localStorage.setItem('gh_token_cc',v);
     if(_inp){_inp.value='';_inp.placeholder='🔑 Actif ✓';}
     if(_sta){_sta.textContent='✅';setTimeout(function(){_sta.textContent='';},2000);}
   });
