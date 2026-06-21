@@ -415,7 +415,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 </div>
 <!-- ADMIN -->
 <div id="ecran-admin" class="cache">
-  <div id="admin-header"><h2>⚙️ Admin — Aventures</h2><div id="gh-status" style="font-size:.72rem;color:#86efac;margin-left:8px;max-width:260px;transition:opacity .5s;opacity:0"></div><button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button><button class="btn-admin-header" id="btn-export" style="background:#15803d;" title="Exporte les aventures pour les intégrer dans le fichier HTML">📤 Exporter</button><button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button></div>
+  <div id="admin-header"><h2>⚙️ Admin — Aventures</h2><div id="gh-status" style="font-size:.72rem;color:#86efac;margin-left:8px;max-width:260px;transition:opacity .5s;opacity:0"></div><button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button><button class="btn-admin-header" id="btn-export" style="background:#15803d;">📤 Exporter</button><button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button></div>
   <div id="admin-tabs"><div class="admin-tab active" data-tab="aventures">🗺️ Aventures</div><div class="admin-tab" data-tab="editeur">✏️ Éditeur</div></div>
   <div id="admin-content">
     <div id="admin-panel-aventures" class="admin-panel active">
@@ -522,6 +522,8 @@ var IMAGE_B64='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBA
 var GPS={hg:{lat:48.6415,lng:-4.4513},bd:{lat:48.6325,lng:-4.4407}};
 var HASH_MDP='e903e187c77a1915acc5affbc2ade00dfead3087c490d222aa9f7a23ad566daf';
 var CLE_AV='tresor_cc_av3',CLE_SAVE='tresor_cc_save3';
+/* URL publique pour charger les aventures — pas de token nécessaire */
+var GITHUB_RAW_URL='https://raw.githubusercontent.com/rabautret/Chasseauxtresors/main/aventures.json';
 var CLR=['#f97316','#8b5cf6','#22c55e','#ef4444','#0ea5e9','#f59e0b','#ec4899','#14b8a6'];
 
 var AV0={id:'default',nom:'La Grande Chasse du CC',emoji:'🏴‍☠️',active:true,
@@ -539,7 +541,24 @@ var AV0={id:'default',nom:'La Grande Chasse du CC',emoji:'🏴‍☠️',active:
 /* ── Aventures ── */
 var aventures=[];
 function chargerAv(){try{var r=localStorage.getItem(CLE_AV);if(r)aventures=JSON.parse(r);}catch(e){}if(!aventures.length)aventures=[JSON.parse(JSON.stringify(AV0))];}
-function chargerAvGithub(){chargerAv();}
+async function chargerAvGithub(){
+  /* Lecture publique sans token — repo public */
+  if(!GITHUB_RAW_URL){chargerAv();return;}
+  try{
+    var r=await fetch(GITHUB_RAW_URL+'?t='+Date.now(),{cache:'no-store'});
+    if(r.ok){
+      var data=await r.json();
+      if(Array.isArray(data)&&data.length){
+        aventures=data;
+        localStorage.setItem(CLE_AV,JSON.stringify(data));
+        afficherStatutGH('✅ Aventures chargées');
+        return;
+      }
+    }
+  }catch(e){console.warn('chargerAvGithub:',e);}
+  /* Fallback : localStorage ou défaut */
+  chargerAv();
+}
 
 function sauverAv(){try{localStorage.setItem(CLE_AV,JSON.stringify(aventures));}catch(e){}afficherStatutGH('💾 Sauvegardé');}
 function sauverAvGithub(){}
@@ -818,18 +837,16 @@ async function validerMdp(){var saisi=document.getElementById('input-mdp').value
 var aMap=null,aMarkers=[],aEditing=null,aAvId=null;
 
 function ouvrirAdmin(){document.getElementById('ecran-accueil').classList.add('cache');document.getElementById('ecran-admin').classList.remove('cache');renderAdminListe();switchTab('aventures');}
-
-/* ── Export aventures ── */
+document.getElementById('btn-export').onclick=function(){saveEditorToAv();exporterAventures();};
 function exporterAventures(){
   var json=JSON.stringify(aventures,null,2);
   var blob=new Blob([json],{type:'application/json'});
   var a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download='aventures_cc_'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();
-  toast('📤 Fichier JSON téléchargé !');
+  a.download='aventures.json';
+  a.click();URL.revokeObjectURL(a.href);
+  toast('📤 aventures.json téléchargé !');
 }
-document.getElementById('btn-export').onclick=function(){saveEditorToAv();exporterAventures();};
 getElementById('btn-admin-fermer').onclick=function(){document.getElementById('ecran-admin').classList.add('cache');document.getElementById('ecran-accueil').classList.remove('cache');};
 document.getElementById('btn-admin-sauver').onclick=function(){sauverAv();toast('💾 Sauvegardé !');var s=this;s.textContent='✅ Sauvé !';setTimeout(function(){s.textContent='💾 Sauver';},1500);};
 
@@ -958,7 +975,7 @@ function aMapRefresh(av){
 
 /* ── DOMContentLoaded ── */
 window.addEventListener('DOMContentLoaded',function(){
-  chargerAv();
+  chargerAvGithub();
   var sv=chargerPartie();
   if(sv&&sv.enChasse&&sv.ordreIds&&sv.ordreIds.length){
     var av=avById(sv.avId)||aventures[0];
