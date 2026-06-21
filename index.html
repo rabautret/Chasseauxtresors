@@ -8,8 +8,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --ciel:#1a3a5c;--ocean:#0e6e8c;--sable:#fef3c7;--coral:#f97316;--coral2:#fb923c;
+:root{--jaune:#f5c800;--jaune2:#ffd700;--noir:#0d0d00;--or-fonce:#b8960c;
+  --ciel:#1a1400;--ocean:#2a2000;--sable:#fef3c7;--coral:#f97316;--coral2:#fb923c;
   --vert:#22c55e;--vert2:#16a34a;--violet:#8b5cf6;--violet2:#7c3aed;
   --or:#f59e0b;--or2:#fbbf24;--rouge:#ef4444;--rouge2:#dc2626;
   --blanc:#ffffff;--texte:#1e293b;
@@ -415,7 +415,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
 </div>
 <!-- ADMIN -->
 <div id="ecran-admin" class="cache">
-  <div id="admin-header"><h2>⚙️ Admin — Aventures</h2><div id="gh-status" style="font-size:.72rem;color:#86efac;margin-left:8px;max-width:260px;transition:opacity .5s;opacity:0"></div><button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button><button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button></div>
+  <div id="admin-header"><h2>⚙️ Admin — Aventures</h2><div id="gh-status" style="font-size:.72rem;color:#86efac;margin-left:8px;max-width:260px;transition:opacity .5s;opacity:0"></div><button class="btn-admin-header" id="btn-admin-sauver">💾 Sauver</button><button class="btn-admin-header" id="btn-export" style="background:#15803d;" title="Exporte les aventures pour les intégrer dans le fichier HTML">📤 Exporter</button><button class="btn-admin-header" id="btn-admin-fermer">✕ Fermer</button></div>
   <div id="admin-tabs"><div class="admin-tab active" data-tab="aventures">🗺️ Aventures</div><div class="admin-tab" data-tab="editeur">✏️ Éditeur</div></div>
   <div id="admin-content">
     <div id="admin-panel-aventures" class="admin-panel active">
@@ -818,7 +818,19 @@ async function validerMdp(){var saisi=document.getElementById('input-mdp').value
 var aMap=null,aMarkers=[],aEditing=null,aAvId=null;
 
 function ouvrirAdmin(){document.getElementById('ecran-accueil').classList.add('cache');document.getElementById('ecran-admin').classList.remove('cache');renderAdminListe();switchTab('aventures');}
-document.getElementById('btn-admin-fermer').onclick=function(){document.getElementById('ecran-admin').classList.add('cache');document.getElementById('ecran-accueil').classList.remove('cache');};
+
+/* ── Export aventures ── */
+function exporterAventures(){
+  var json=JSON.stringify(aventures,null,2);
+  var blob=new Blob([json],{type:'application/json'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='aventures_cc_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  toast('📤 Fichier JSON téléchargé !');
+}
+document.getElementById('btn-export').onclick=function(){saveEditorToAv();exporterAventures();};
+getElementById('btn-admin-fermer').onclick=function(){document.getElementById('ecran-admin').classList.add('cache');document.getElementById('ecran-accueil').classList.remove('cache');};
 document.getElementById('btn-admin-sauver').onclick=function(){sauverAv();toast('💾 Sauvegardé !');var s=this;s.textContent='✅ Sauvé !';setTimeout(function(){s.textContent='💾 Sauver';},1500);};
 
 document.querySelectorAll('.admin-tab').forEach(function(tab){tab.addEventListener('click',function(){switchTab(this.dataset.tab);});});
