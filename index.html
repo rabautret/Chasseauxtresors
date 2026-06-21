@@ -443,7 +443,7 @@ body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:fle
           <div id="editor-indices"></div>
           <button class="badd" id="btn-add-ind">＋ Ajouter un indice</button>
         </div>
-        <div class="tsec"><div class="esec-t">🏆 Trésor Final</div>
+        <div class="tsec" style="border-color:#22c55e;"><div class="esec-t" style="color:#22c55e;">🟢 Point de Départ</div><div class="fl">Description du point de départ</div><textarea class="fta" id="e-depart-txt" rows="2" placeholder="Ex: Rendez-vous à l'accueil du camping…"></textarea><div class="fl">Position</div><button class="btn-av" id="btn-pos-depart" style="background:#22c55e;color:white;padding:8px 14px;border-radius:8px;margin-top:4px;">📍 Positionner sur la carte</button><div class="coords" id="e-depart-coords">📌 Non positionné</div></div><div class="tsec"><div class="esec-t">🏆 Trésor Final</div>
           <div class="fl">Texte de localisation</div><textarea class="fta" id="e-tresor-txt" rows="3" placeholder="Décris où trouver le trésor..."></textarea>
           <div class="fl">Code secret</div><input class="fi" id="e-tresor-code" maxlength="4" placeholder="0000" style="width:100px;text-align:center;font-family:var(--f-titre);font-size:1.1rem;letter-spacing:.2em">
           <div class="fl">Position</div>
@@ -522,7 +522,6 @@ var IMAGE_B64='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBA
 var GPS={hg:{lat:48.6415,lng:-4.4513},bd:{lat:48.6325,lng:-4.4407}};
 var HASH_MDP='e903e187c77a1915acc5affbc2ade00dfead3087c490d222aa9f7a23ad566daf';
 var CLE_AV='tresor_cc_av3',CLE_SAVE='tresor_cc_save3';
-/* URL publique pour charger les aventures — pas de token nécessaire */
 var GITHUB_RAW_URL='https://raw.githubusercontent.com/rabautret/Chasseauxtresors/main/aventures.json';
 var CLR=['#f97316','#8b5cf6','#22c55e','#ef4444','#0ea5e9','#f59e0b','#ec4899','#14b8a6'];
 
@@ -535,6 +534,7 @@ var AV0={id:'default',nom:'La Grande Chasse du CC',emoji:'🏴‍☠️',active:
     {id:5,code:'0000',lat:48.6372,lng:-4.4462,texte:"À l'ombre des arbres le midi. Sous la 3ème table.",label:'🌳 Pique-nique'},
     {id:6,code:'0000',lat:48.6383,lng:-4.4442,texte:"La mer est proche… au panneau du GR34.",label:'🌊 Plage GR34'}
   ],
+  depart:{lat:48.6375,lng:-4.4455,texte:'Rendez-vous à l\'accueil du camping !'},
   tresor:{code:'0000',lat:48.6378,lng:-4.4458,texte:"Sous la grande pierre plate près de l'entrée. Tu l'as mérité !"}
 };
 
@@ -542,21 +542,13 @@ var AV0={id:'default',nom:'La Grande Chasse du CC',emoji:'🏴‍☠️',active:
 var aventures=[];
 function chargerAv(){try{var r=localStorage.getItem(CLE_AV);if(r)aventures=JSON.parse(r);}catch(e){}if(!aventures.length)aventures=[JSON.parse(JSON.stringify(AV0))];}
 async function chargerAvGithub(){
-  /* Lecture publique sans token — repo public */
   if(!GITHUB_RAW_URL){chargerAv();return;}
   try{
     var r=await fetch(GITHUB_RAW_URL+'?t='+Date.now(),{cache:'no-store'});
-    if(r.ok){
-      var data=await r.json();
-      if(Array.isArray(data)&&data.length){
-        aventures=data;
-        localStorage.setItem(CLE_AV,JSON.stringify(data));
-        afficherStatutGH('✅ Aventures chargées');
-        return;
-      }
-    }
-  }catch(e){console.warn('chargerAvGithub:',e);}
-  /* Fallback : localStorage ou défaut */
+    if(r.ok){var d=await r.json();
+      if(Array.isArray(d)&&d.length){
+        aventures=d;localStorage.setItem(CLE_AV,JSON.stringify(d));return;}}
+  }catch(e){console.warn('load:',e);}
   chargerAv();
 }
 
@@ -579,8 +571,8 @@ function chargerPartie(){try{var r=localStorage.getItem(CLE_SAVE);return r?JSON.
 function effacerPartie(){try{localStorage.removeItem(CLE_SAVE);}catch(e){}}
 
 /* ── Navigation ── */
-var ECRANS=['ecran-accueil','ecran-choix-aventure','ecran-equipe','ecran-ensemble','ecran-recap'];
-function allerVers(id){ECRANS.forEach(function(e){document.getElementById(e).classList.add('cache');});document.getElementById('header').classList.remove('on');document.getElementById('map-wrapper').classList.remove('on');if(id)document.getElementById(id).classList.remove('cache');}
+var ECRANS=['ecran-accueil','ecran-categorie','ecran-choix-aventure','ecran-equipe','ecran-ensemble','ecran-recap'];
+function allerVers(id){ECRANS.forEach(function(e){var el=document.getElementById(e);if(el)el.classList.add('cache');});document.getElementById('header').classList.remove('on');document.getElementById('map-wrapper').classList.remove('on');if(id){var tel=document.getElementById(id);if(tel)tel.classList.remove('cache');}}
 function afficherJeu(){allerVers(null);document.getElementById('header').classList.add('on');document.getElementById('map-wrapper').classList.add('on');}
 
 /* ── Accueil ── */
@@ -842,9 +834,9 @@ function exporterAventures(){
   var json=JSON.stringify(aventures,null,2);
   var blob=new Blob([json],{type:'application/json'});
   var a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='aventures.json';
-  a.click();URL.revokeObjectURL(a.href);
+  a.href=URL.createObjectURL(blob);a.download='aventures.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
   toast('📤 aventures.json téléchargé !');
 }
 getElementById('btn-admin-fermer').onclick=function(){document.getElementById('ecran-admin').classList.add('cache');document.getElementById('ecran-accueil').classList.remove('cache');};
@@ -880,6 +872,7 @@ function renderAdminListe(){
 document.getElementById('btn-new-av').onclick=function(){
   var n={id:genId(),nom:'Nouvelle aventure',emoji:'🗺️',active:false,categorie:'moussaillons',
     indices:[{id:Date.now(),code:'0000',lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:"Texte de l'indice 1",label:'📍 Lieu 1'}],
+    depart:{lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:'Point de départ de l\'aventure'},
     tresor:{code:'0000',lat:48.6378,lng:-4.4458,texte:'Texte de localisation du trésor'}};
   aventures.push(n);renderAdminListe();editerAv(n.id);
 };
@@ -894,6 +887,9 @@ function editerAv(id){
   document.getElementById('e-nom').value=av.nom;
   document.getElementById('e-emoji').value=av.emoji;
   document.getElementById('e-categorie').value=av.categorie||'all';
+  var dep=av.depart||{lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:''};
+  document.getElementById('e-depart-txt').value=dep.texte;
+  document.getElementById('e-depart-coords').textContent='📌 '+dep.lat+', '+dep.lng;
   document.getElementById('e-tresor-txt').value=av.tresor.texte;
   document.getElementById('e-tresor-code').value=av.tresor.code;
   document.getElementById('e-tresor-coords').textContent='📌 '+av.tresor.lat+', '+av.tresor.lng;
@@ -902,7 +898,10 @@ function editerAv(id){
 }
 document.getElementById('btn-editor-back').onclick=function(){saveEditorToAv();document.getElementById('editor-av').classList.remove('on');document.getElementById('editor-ph').style.display='';aAvId=null;aEditing=null;renderAdminListe();switchTab('aventures');};
 ['e-nom','e-emoji','e-tresor-txt','e-tresor-code'].forEach(function(id){document.getElementById(id).addEventListener('input',saveEditorToAv);});
-function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.categorie=document.getElementById('e-categorie').value;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);sauverAv();}
+function saveEditorToAv(){if(!aAvId)return;var av=avById(aAvId);if(!av)return;av.nom=document.getElementById('e-nom').value||av.nom;av.emoji=document.getElementById('e-emoji').value||av.emoji;av.categorie=document.getElementById('e-categorie').value;av.tresor.texte=document.getElementById('e-tresor-txt').value;av.tresor.code=document.getElementById('e-tresor-code').value.toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);
+  if(!av.depart)av.depart={lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2};
+  av.depart.texte=document.getElementById('e-depart-txt').value;
+  sauverAv();}
 
 /* Indices éditeur */
 function renderEditorIndices(av){
@@ -929,6 +928,7 @@ function renderEditorIndices(av){
 document.getElementById('btn-add-ind').onclick=function(){var av=avById(aAvId);if(!av)return;var nid=Date.now();av.indices.push({id:nid,code:'0000',lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2,texte:'Nouvel indice',label:'📍 Nouveau lieu'});renderEditorIndices(av);if(aMap)aMapRefresh(av);toast('➕ Ajouté');};
 function suppIndice(id){var av=avById(aAvId);if(!av||av.indices.length<=1){toast('⚠️ Minimum 1 indice');return;}av.indices=av.indices.filter(function(x){return x.id!==id;});renderEditorIndices(av);if(aMap)aMapRefresh(av);toast('🗑️ Supprimé');}
 function activerPosIndice(id){aEditing={type:'indice',id:id};document.querySelectorAll('.bpos').forEach(function(b){b.classList.remove('on');});var btn=document.getElementById('ipos-'+id);if(btn)btn.classList.add('on');document.getElementById('amap-hint').textContent='👆 Clique ou glisse pour positionner l’indice';var av=avById(aAvId);var ind=av&&av.indices.find(function(x){return x.id===id;});if(ind&&aMap)aMap.flyTo([ind.lat,ind.lng],18,{duration:.5});if(av)aMapRefresh(av);}
+document.getElementById('btn-pos-depart').onclick=function(){aEditing={type:'depart'};document.querySelectorAll('.bpos').forEach(function(b){b.classList.remove('on');});this.classList.add('on');document.getElementById('amap-hint').textContent='Clique sur la carte pour placer le départ';};
 document.getElementById('btn-pos-tresor').onclick=function(){aEditing={type:'tresor'};document.querySelectorAll('.bpos').forEach(function(b){b.classList.remove('on');});this.classList.add('on');document.getElementById('amap-hint').textContent='👆 Clique pour placer le trésor';var av=avById(aAvId);if(aMap&&av)aMap.flyTo([av.tresor.lat,av.tresor.lng],18,{duration:.5});};
 
 /* Carte admin */
@@ -970,7 +970,14 @@ function aMapRefresh(av){
   var mT=L.marker([av.tresor.lat,av.tresor.lng],{icon:icoT,draggable:true}).addTo(aMap);
   mT.bindTooltip('🏆 Trésor final');
   mT.on('dragend',function(ev){var a=avById(aAvId);if(a){a.tresor.lat=parseFloat(ev.target.getLatLng().lat.toFixed(6));a.tresor.lng=parseFloat(ev.target.getLatLng().lng.toFixed(6));document.getElementById('e-tresor-coords').textContent='📌 '+a.tresor.lat+', '+a.tresor.lng;toast('🏆 Trésor déplacé !');}});
-  aMarkers.push(mT);aMap.invalidateSize();
+  aMarkers.push(mT);
+  var dep=av.depart||{lat:(GPS.hg.lat+GPS.bd.lat)/2,lng:(GPS.hg.lng+GPS.bd.lng)/2};
+  var selD=aEditing&&aEditing.type==='depart';
+  var icoD=L.divIcon({className:'',html:'<div style="width:38px;height:38px;background:'+(selD?'white':'#22c55e')+';border:3px solid '+(selD?'#22c55e':'white')+';border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem">🟢</div>',iconSize:[38,38],iconAnchor:[19,19]});
+  var mD=L.marker([dep.lat,dep.lng],{icon:icoD,draggable:true}).addTo(aMap);
+  mD.bindTooltip('🟢 Point de départ');
+  mD.on('dragend',function(ev){var a=avById(aAvId);if(a){if(!a.depart)a.depart={};a.depart.lat=parseFloat(ev.target.getLatLng().lat.toFixed(6));a.depart.lng=parseFloat(ev.target.getLatLng().lng.toFixed(6));document.getElementById('e-depart-coords').textContent='📌 '+a.depart.lat+', '+a.depart.lng;toast('🟢 Départ déplacé !');sauverAv();}});
+  aMarkers.push(mD);aMap.invalidateSize();
 }
 
 /* ── DOMContentLoaded ── */
