@@ -562,16 +562,16 @@ function genId(){return 'av_'+Date.now()+'_'+Math.floor(Math.random()*9999);}
 function avById(id){return aventures.find(function(a){return a.id===id;})||aventures[0];}
 
 /* ── Partie ── */
-var S={mode:null,nomEq:'',avId:null,categorie:'',ordreIds:[],etape:0,codeOk:false,tentatives:0,panneauOuvert:true,chrono:0,enChasse:false,tresorPhase:false,modeImg:true};
+var S={mode:null,nomEq:'',avId:null,categorie:'',ordreIds:[],etape:0,departPhase:true,codeOk:false,tentatives:0,panneauOuvert:true,chrono:0,enChasse:false,tresorPhase:false,modeImg:true};
 var chronoT=null,mGPS=null,cercleGPS=null,mIndices=[],theMap=null,layerImg=null,gpsInit=false;
 function avCourante(){return avById(S.avId);}
 function indicesJeu(){var av=avCourante();return S.ordreIds.map(function(id){return av.indices.find(function(x){return x.id===id;});}).filter(Boolean);}
-function sauverPartie(){try{localStorage.setItem(CLE_SAVE,JSON.stringify({mode:S.mode,nomEq:S.nomEq,avId:S.avId,ordreIds:S.ordreIds,etape:S.etape,chrono:S.chrono,enChasse:S.enChasse,tresorPhase:S.tresorPhase}));}catch(e){}}
+function sauverPartie(){try{localStorage.setItem(CLE_SAVE,JSON.stringify({mode:S.mode,nomEq:S.nomEq,avId:S.avId,ordreIds:S.ordreIds,etape:S.etape,departPhase:S.departPhase,chrono:S.chrono,enChasse:S.enChasse,tresorPhase:S.tresorPhase}));}catch(e){}}
 function chargerPartie(){try{var r=localStorage.getItem(CLE_SAVE);return r?JSON.parse(r):null;}catch(e){return null;}}
 function effacerPartie(){try{localStorage.removeItem(CLE_SAVE);}catch(e){}}
 
 /* ── Navigation ── */
-var ECRANS=['ecran-accueil','ecran-categorie','ecran-choix-aventure','ecran-equipe','ecran-ensemble','ecran-recap'];
+var ECRANS=['ecran-accueil','ecran-choix-aventure','ecran-equipe','ecran-ensemble','ecran-recap'];
 function allerVers(id){ECRANS.forEach(function(e){var el=document.getElementById(e);if(el)el.classList.add('cache');});var h=document.getElementById('header');if(h)h.classList.remove('on');var mw=document.getElementById('map-wrapper');if(mw)mw.classList.remove('on');if(id){var t=document.getElementById(id);if(t)t.classList.remove('cache');}}
 function afficherJeu(){allerVers(null);document.getElementById('header').classList.add('on');document.getElementById('map-wrapper').classList.add('on');}
 
@@ -635,14 +635,14 @@ demarrerChasse(false);
 function demarrerChasse(reprise){
   if(!S.ordreIds.length){toast("⚠️ Fais le tirage d'abord !");return;}
   var av=avCourante();
-  if(!reprise){S.etape=0;S.chrono=0;S.tresorPhase=false;S.enChasse=true;S.codeOk=false;S.tentatives=0;}
+  if(!reprise){S.etape=0;S.departPhase=true;S.chrono=0;S.tresorPhase=false;S.enChasse=true;S.codeOk=false;S.tentatives=0;}
   document.getElementById('h-titre').textContent=av.nom;
   var badge=document.getElementById('ebadge');
   if(S.nomEq){badge.textContent='👥 '+S.nomEq;badge.style.display='block';}else{badge.style.display='none';}
   afficherJeu();
   if(!theMap){initCarte();}else{mIndices.forEach(function(m){theMap.removeLayer(m);});mIndices=[];indicesJeu().forEach(function(ind,i){mIndices.push(creerMarker(ind,i<S.etape?'done':i===S.etape?'active':'locked'));});if(S.tresorPhase){afficherMarkerTresor(false);}else{theMap.setView([indicesJeu()[S.etape].lat,indicesJeu()[S.etape].lng],18);}}
   document.getElementById('panneau').style.display='';document.getElementById('ptresor').classList.remove('on');
-  if(S.tresorPhase){renderProg();afficherPanneauTresor();}else{renderProg();renderIndice();}
+  if(S.departPhase){renderProg();renderDepart();}else if(S.tresorPhase){renderProg();afficherPanneauTresor();}else{renderProg();renderIndice();}
   initGPS();demarrerChrono();sauverPartie();
   if(!reprise){lancerConfettis(20);toast('🚀 La chasse commence !');}else{toast('▶ Partie reprise !');}
 }
@@ -678,6 +678,12 @@ function creerMarker(ind,etat){
 /* ── Progression ── */
 function renderProg(){
   var c=document.getElementById('progression');c.innerHTML='';
+  /* Étoile départ */
+  var ds=document.createElement('div');
+  ds.className='etape-star '+(S.departPhase?'active':'done');
+  ds.textContent=S.departPhase?'🌟':'✅';
+  ds.title='Point de départ';
+  c.appendChild(ds);
   var total=indicesJeu().length;
   for(var i=0;i<total;i++){
     var d=document.createElement('div');
@@ -693,6 +699,23 @@ function renderProg(){
 }
 
 /* ── Indice ── */
+function renderDepart(){
+  var av=avCourante();
+  var dep=av.depart||{texte:'Rendez-vous au point de départ !',lat:0,lng:0};
+  document.getElementById('tab-label').textContent='🟢 Point de départ';
+  document.getElementById('indice-num').textContent='Départ';
+  document.getElementById('indice-lieu').textContent='📍 Rejoins le point de départ';
+  document.getElementById('texte-indice').textContent=dep.texte;
+  /* Cacher la zone code, montrer bouton départ */
+  document.getElementById('zone-code').style.display='none';
+  document.getElementById('btn-trouve').style.display='block';
+  document.getElementById('btn-trouve').disabled=false;
+  document.getElementById('btn-trouve').innerHTML="🟢 J'y suis ! On commence !";
+  /* Centrer carte sur le départ */
+  if(theMap&&dep.lat&&dep.lng){
+    setTimeout(function(){theMap.flyTo([dep.lat,dep.lng],18,{duration:1.2});},300);
+  }
+}
 function renderIndice(){
   var ind=indicesJeu()[S.etape];
   var num=S.etape+1,total=indicesJeu().length;
@@ -729,6 +752,23 @@ function validerCode(){
   }
 }
 document.getElementById('btn-trouve').addEventListener('click',function(){
+  /* Phase départ → passer à l'indice 1 */
+  if(S.departPhase){
+    S.departPhase=false;
+    document.getElementById('zone-code').style.display='';
+    document.getElementById('btn-trouve').innerHTML="🙋 J'ai trouvé !";
+    document.getElementById('btn-trouve').disabled=true;
+    /* Voler vers indice 1 */
+    var inds=indicesJeu();
+    if(inds.length&&theMap){
+      theMap.removeLayer(mIndices[0]);mIndices[0]=creerMarker(inds[0],'active');
+      setTimeout(function(){theMap.flyTo([inds[0].lat,inds[0].lng],18,{duration:1.2});},300);
+    }
+    renderProg();renderIndice();
+    toast('🗺️ Indice 1 débloqué !');
+    sauverPartie();
+    return;
+  }
   if(!S.codeOk)return;this.disabled=true;mIndices[S.etape].setOpacity(0.2);
   S.etape++;sauverPartie();
   if(S.etape<indicesJeu().length){
@@ -814,7 +854,7 @@ var toastT=null;
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');if(toastT)clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on');},2500);}
 
 /* ── Reprise ── */
-document.getElementById('btn-rep').onclick=function(){document.getElementById('banner').classList.remove('on');var sv=chargerPartie();if(!sv)return;S.mode=sv.mode;S.nomEq=sv.nomEq;S.avId=sv.avId;S.ordreIds=sv.ordreIds;S.etape=sv.etape;S.chrono=sv.chrono;S.enChasse=sv.enChasse;S.tresorPhase=sv.tresorPhase;demarrerChasse(true);};
+document.getElementById('btn-rep').onclick=function(){document.getElementById('banner').classList.remove('on');var sv=chargerPartie();if(!sv)return;S.mode=sv.mode;S.nomEq=sv.nomEq;S.avId=sv.avId;S.ordreIds=sv.ordreIds;S.etape=sv.etape;S.departPhase=sv.departPhase||false;S.chrono=sv.chrono;S.enChasse=sv.enChasse;S.tresorPhase=sv.tresorPhase;demarrerChasse(true);};
 document.getElementById('btn-newp').onclick=function(){document.getElementById('banner').classList.remove('on');effacerPartie();};
 
 /* ═══════════ ADMIN ═══════════ */
