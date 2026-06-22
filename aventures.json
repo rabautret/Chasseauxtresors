@@ -1,9 +1,9 @@
 [
   {
     "id": "av_1781815725953_5363",
-    "nom": "FoxlxoodTEST GAELLE",
+    "nom": "Test",
     "emoji": "🗺️",
-    "active": false,
+    "active": true,
     "indices": [
       {
         "id": 1781815725953,
@@ -52,51 +52,11 @@
       "lng": -4.445357,
       "texte": "Texte de localisation du trésor"
     },
-    "categorie": "moussaillons"
-  },
-  {
-    "id": "av_1781818214060_1612",
-    "nom": "Nouvelle aventure",
-    "emoji": "🗺️",
-    "active": false,
-    "indices": [
-      {
-        "id": 1781818214060,
-        "code": "0000",
-        "lat": 48.637,
-        "lng": -4.446,
-        "texte": "Texte de l'indice 1",
-        "label": "📍 Lieu 1"
-      }
-    ],
-    "tresor": {
-      "code": "0000",
-      "lat": 48.6378,
-      "lng": -4.4458,
-      "texte": "Texte de localisation du trésor"
-    }
-  },
-  {
-    "id": "av_1781819161068_7165",
-    "nom": "Nouvelle aventure",
-    "emoji": "🗺️",
-    "active": false,
     "categorie": "moussaillons",
-    "indices": [
-      {
-        "id": 1781819161068,
-        "code": "0000",
-        "lat": 48.637,
-        "lng": -4.446,
-        "texte": "Texte de l'indice 1",
-        "label": "📍 Lieu 1"
-      }
-    ],
-    "tresor": {
-      "code": "0000",
-      "lat": 48.6378,
-      "lng": -4.4458,
-      "texte": "Texte de localisation du trésor"
+    "depart": {
+      "lat": 48.637,
+      "lng": -4.446,
+      "texte": "Point de départ"
     }
   }
 ]
