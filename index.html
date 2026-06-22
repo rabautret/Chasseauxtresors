@@ -18,7 +18,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--ciel);font-family:var(--f-corps);height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 #ecran-accueil{position:fixed;inset:0;z-index:9000;display:flex;flex-direction:column;align-items:center;overflow:hidden;
-  background:linear-gradient(180deg,#0a1628 0%,#0f2744 15%,#1a3a5c 30%,#1e5f8e 45%,#1a7a9e 55%,#d4a860 72%,#c8956a 78%,#e8c9a0 82%,#f0d9b5 88%,#dbc89a 100%)}
+  background:linear-gradient(180deg,#0d0d00 0%,#1a1400 20%,#2a2000 60%,#1a1400 45%,#1a7a9e 55%,#d4a860 72%,#c8956a 78%,#e8c9a0 82%,#f0d9b5 88%,#dbc89a 100%)}
 #ecran-accueil.cache{display:none}
 #sky-stars{position:absolute;top:0;left:0;right:0;height:40%;pointer-events:none}
 .star{position:absolute;background:white;border-radius:50%;animation:twinkle var(--d,2s) ease-in-out infinite}
@@ -571,7 +571,7 @@ function chargerPartie(){try{var r=localStorage.getItem(CLE_SAVE);return r?JSON.
 function effacerPartie(){try{localStorage.removeItem(CLE_SAVE);}catch(e){}}
 
 /* ── Navigation ── */
-var ECRANS=['ecran-accueil','ecran-choix-aventure','ecran-equipe','ecran-ensemble','ecran-recap'];
+var ECRANS=['ecran-accueil','ecran-categorie','ecran-choix-aventure','ecran-equipe','ecran-ensemble','ecran-recap'];
 function allerVers(id){ECRANS.forEach(function(e){var el=document.getElementById(e);if(el)el.classList.add('cache');});var h=document.getElementById('header');if(h)h.classList.remove('on');var mw=document.getElementById('map-wrapper');if(mw)mw.classList.remove('on');if(id){var t=document.getElementById(id);if(t)t.classList.remove('cache');}}
 function afficherJeu(){allerVers(null);document.getElementById('header').classList.add('on');document.getElementById('map-wrapper').classList.add('on');}
 
@@ -839,7 +839,7 @@ function exporterAventures(){
   URL.revokeObjectURL(a.href);
   toast('📤 aventures.json téléchargé !');
 }
-getElementById('btn-admin-fermer').onclick=function(){document.getElementById('ecran-admin').classList.add('cache');document.getElementById('ecran-accueil').classList.remove('cache');};
+document.getElementById('btn-admin-fermer').onclick=function(){document.getElementById('ecran-admin').classList.add('cache');document.getElementById('ecran-accueil').classList.remove('cache');};
 document.getElementById('btn-admin-sauver').onclick=function(){sauverAv();toast('💾 Sauvegardé !');var s=this;s.textContent='✅ Sauvé !';setTimeout(function(){s.textContent='💾 Sauver';},1500);};
 
 document.querySelectorAll('.admin-tab').forEach(function(tab){tab.addEventListener('click',function(){switchTab(this.dataset.tab);});});
